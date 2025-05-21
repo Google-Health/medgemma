@@ -32,7 +32,7 @@ consult our Intended Use Statement for more details.
     the model.
 
 *   Visit the model on
-    [Hugging Face](https://huggingface.co/models?other=medgemma) or
+    [Hugging Face](https://huggingface.co/collections/google/medgemma-release-680aade845f90bec6a3f60c4) or
     [Model Garden](https://console.cloud.google.com/vertex-ai/publishers/google/model-garden/medgemma).
 
 ## Contributing
