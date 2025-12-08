@@ -5,5 +5,5 @@ grpcio-status~=1.68.1
 gunicorn~=23.0.0
 jsonschema~=4.23.0
 numpy<=2.0.2 # bypassing faulty version restriction in tritonclient
-setuptools~=75.6.0
+setuptools~=78.1.1
 typing-extensions~=4.12.2
