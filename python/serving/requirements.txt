@@ -9,7 +9,7 @@ absl-py==2.3.1 \
     --hash=sha256:eeecf07f0c2a93ace0772c92e596ace6d3d3996c042b2128459aaae2a76de11d
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
 attrs==25.4.0 \
@@ -527,9 +527,9 @@ markupsafe==3.0.3 \
     # via
     #   jinja2
     #   werkzeug
-marshmallow==3.26.1 \
-    --hash=sha256:3350409f20a70a7e4e11a27661187b77cdcaeb20abca41c1454fe33636bea09c \
-    --hash=sha256:e6d8affb6cb61d39d26402096dc0aee12d5a26d490a121f118d2e81dc0719dc6
+marshmallow==3.26.2 \
+    --hash=sha256:013fa8a3c4c276c24d26d84ce934dc964e2aa794345a0f8c7e5a7191482c8a73 \
+    --hash=sha256:bbe2adb5a03e6e3571b573f42527c6fe926e17467833660bebd11593ab8dfd57
     # via dataclasses-json
 mypy-extensions==1.1.0 \
     --hash=sha256:1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505 \
@@ -574,7 +574,7 @@ numpy==1.26.4 \
     --hash=sha256:ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
     #   imagecodecs
@@ -591,7 +591,7 @@ opencv-python-headless==4.11.0.86 \
     --hash=sha256:f447d8acbb0b6f2808da71fddd29c1cdd448d2bc98f72d9bb78a7a898fc9621b
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   ez-wsi-dicomweb
 openslide-bin==4.0.0.10 \
     --hash=sha256:43b65d501f9b03fc890a02449d614fae66fc54a482b29414ebff50cc9dfcb7c3 \
@@ -1087,7 +1087,7 @@ requests-mock==1.9.3 \
     --hash=sha256:8d72abe54546c1fc9696fa1516672f1031d72a55a1d66c85184f972a24ba0eba
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/triton/requirements.in
     #   ez-wsi-dicomweb
 requests-toolbelt==1.0.0 \
@@ -1276,7 +1276,7 @@ tqdm==4.67.1 \
 transformers==4.57.3 \
     --hash=sha256:c77d353a4851b1880191603d36acb313411d3577f6e2897814f333841f7003f4 \
     --hash=sha256:df4945029aaddd7c09eec5cad851f30662f8bd1746721b34cc031d70c65afebc
-    # via -r medgemma_requirements.in
+    # via -r requirements.in
 tritonclient==2.56.0 \
     --hash=sha256:a28734a028a1f02429d5463b6dccc3fdb0a13308ef74d9eca8a1e5dff8c60913 \
     --hash=sha256:b0fe8ab57741f8ffa0fa9e21f1ee78610be588b37bc88eb2d15492a2a652f6ad \
