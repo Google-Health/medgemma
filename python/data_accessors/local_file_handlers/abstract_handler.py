@@ -15,7 +15,11 @@
 
 import abc
 import io
-from typing import Any, Iterator, Mapping, Self, Sequence, Union
+from typing import Any, Iterator, Mapping, Sequence, Union
+try:
+  from typing import Self # type: ignore
+except ImportError:
+  from typing_extensions import Self
 
 import numpy as np
 

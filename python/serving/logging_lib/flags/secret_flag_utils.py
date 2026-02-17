@@ -216,4 +216,5 @@ def get_bool_secret_or_env(
 # state, e.g., acquired locks that will not release or references to invalid
 # state.
 _init_fork_module_state()
-os.register_at_fork(after_in_child=_init_fork_module_state)
+if hasattr(os, 'register_at_fork'):
+  os.register_at_fork(after_in_child=_init_fork_module_state)
