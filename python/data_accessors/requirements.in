@@ -14,5 +14,5 @@ openslide-bin~=4.0.0.8
 pydicom~=3.0.1
 pypng~=0.20220715.0
 redis~=6.0.0
-requests~=2.32.4
+requests~=2.33.0
 requests-mock~=1.9.3
