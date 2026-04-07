@@ -4,13 +4,12 @@
 #
 #    pip-compile --allow-unsafe --generate-hashes medgemma_requirements.in
 #
-
 absl-py==2.3.1 \
     --hash=sha256:a97820526f7fbfd2ec1bce83f3f25e3a14840dac0d8e02a0b71cd75db3f77fc9 \
     --hash=sha256:eeecf07f0c2a93ace0772c92e596ace6d3d3996c042b2128459aaae2a76de11d
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
 annotated-doc==0.0.4 \
@@ -747,7 +746,7 @@ numpy==1.26.4 \
     --hash=sha256:ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
     #   imagecodecs
@@ -972,9 +971,9 @@ pydicom==3.0.1 \
     # via
     #   -r ../data_accessors/requirements.in
     #   ez-wsi-dicomweb
-pygments==2.19.2 \
-    --hash=sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887 \
-    --hash=sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b
+pygments==2.20.0 \
+    --hash=sha256:6757cd03768053ff99f3039c1a36d6c0aa0b263438fcab17520b30a303a82b5f \
+    --hash=sha256:81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176
     # via rich
 pyparsing==3.3.2 \
     --hash=sha256:850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d \
@@ -1276,7 +1275,7 @@ requests-mock==1.9.3 \
     --hash=sha256:8d72abe54546c1fc9696fa1516672f1031d72a55a1d66c85184f972a24ba0eba
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/triton/requirements.in
     #   ez-wsi-dicomweb
 requests-toolbelt==1.0.0 \
@@ -1482,7 +1481,7 @@ tqdm==4.67.3 \
 transformers==5.2.0 \
     --hash=sha256:0088b8b46ccc9eff1a1dca72b5d618a5ee3b1befc3e418c9512b35dea9f9a650 \
     --hash=sha256:9ecaf243dc45bee11a7d93f8caf03746accc0cb069181bbf4ad8566c53e854b4
-    # via -r medgemma_requirements.in
+    # via -r requirements.in
 tritonclient==2.56.0 \
     --hash=sha256:a28734a028a1f02429d5463b6dccc3fdb0a13308ef74d9eca8a1e5dff8c60913 \
     --hash=sha256:b0fe8ab57741f8ffa0fa9e21f1ee78610be588b37bc88eb2d15492a2a652f6ad \
