@@ -150,3 +150,40 @@ def window(
       (bottom_clip, top_clip),
       (0, iinfo.max),
   ).astype(iinfo)
+
+
+def window_accurate(
+    image: np.ndarray,
+    window_center: int,
+    window_width: int,
+    dtype: Any = np.uint8,
+) -> np.ndarray:
+  """Applies the Window operation accurately.
+
+  This implementation addresses the bugs in the legacy `window` function:
+  1) Corrects the window range to center +/- half width.
+  2) Rounds to the nearest integer before casting to minimize precision loss.
+
+  Args:
+    image: An image to be windowed, containing signed integer pixels.
+    window_center: The center of the window.
+    window_width: The width of the window.
+    dtype: Output data type (default: uint8).
+
+  Returns:
+    Windowed image as a numpy array.
+  """
+  iinfo = np.iinfo(dtype)
+  half_window_width = window_width // 2
+  top_clip = window_center + half_window_width
+  bottom_clip = window_center - half_window_width
+
+  # Round prior to cast to minimize precision loss.
+  return np.round(
+      np.interp(
+          image.clip(bottom_clip, top_clip),
+          (bottom_clip, top_clip),
+          (0, iinfo.max),
+      ),
+      0,
+  ).astype(iinfo)

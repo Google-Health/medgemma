@@ -165,23 +165,9 @@ class TraditionalWindow(ImageTransform):
     Returns:
       Windowed image as numpy array.
     """
-    iinfo = np.iinfo(self._default_type)
-    # Actual range is center - half width to center + half width.
-    # Actual number of pixels is width + 1.
-    # See https://radiopaedia.org/articles/windowing-ct?lang=us
-    half_window_width = self.width // 2
-    center = self.center
-    top_clip = center + half_window_width
-    bottom_clip = center - half_window_width
-    # Round prior to cast to minimize precision loss.
-    return np.round(
-        np.interp(
-            image.clip(bottom_clip, top_clip),
-            (bottom_clip, top_clip),
-            (0, iinfo.max),
-        ),
-        0,
-    ).astype(iinfo)
+    return image_utils.window_accurate(
+        image, self.center, self.width, self._default_type
+    )
 
 
 class RGBWindow(ImageTransform):
@@ -684,9 +670,15 @@ def _process_buffered_mri_volume(
     return
   output_dtype = np.uint8
   max_dtype_value = np.iinfo(output_dtype).max
-  min_val = np.min(images)
-  max_delta = np.max(images) - min_val
-  for image in images:
+  min_val = min(np.min(img) for img in images)
+  max_val = max(np.max(img) for img in images)
+  max_delta = max_val - min_val
+
+  # Convert to list to allow popping if it's not already a mutable list.
+  # This helps free memory of processed slices.
+  images_list = list(images)
+  while images_list:
+    image = images_list.pop(0)
     image = image.astype(np.float64)
     if max_delta == 0:
       image[...] = max_dtype_value
