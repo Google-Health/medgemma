@@ -1,0 +1,5 @@
+requests~=2.32.3
+# TODO: b/375469331 - Enable testing with most current requests-mock release.
+requests-mock==1.9.3
+tritonclient~=2.56.0
+typing-extensions~=4.12.2

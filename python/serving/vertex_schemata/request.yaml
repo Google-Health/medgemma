@@ -1,0 +1,740 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+title: MedGemmaChatCompletionRequest
+type: object
+description: >
+  The schema for a single MedGemma chat completion request, with parameters aligned
+  with the core functionality of the OpenAI Chat Completion API:
+  https://platform.openai.com/docs/api-reference/chat/create
+additionalProperties: false
+required:
+  - messages
+properties:
+  "@requestFormat":
+    type: string
+    title: Request Format
+    description: >
+      A legacy field included for backward compatibility with older clients, specifically those
+      targeting the Model Garden vLLM container. Endpoints deployed with this schema inherently
+      treat all requests as Chat Completion requests, making the field redundant. If specified,
+      its value must be chatCompletions."
+    const: chatCompletions
+  messages:
+    items:
+      anyOf:
+        - $ref: "#/components/schemas/ChatCompletionSystemMessageParam"
+        - $ref: "#/components/schemas/ChatCompletionUserMessageParam"
+        - $ref: "#/components/schemas/ChatCompletionAssistantMessageParam"
+    type: array
+    minItems: 1
+    description: >
+      A list of messages comprising the conversation so far. Depending on the model you use,
+      different message types (modalities) are supported, like text and images.
+    title: Messages
+  model:
+    anyOf:
+      - type: string
+      - type: "null"
+    description: >
+      This field is included for compatibility with the OpenAI chat completion API. It is not
+      currently used, because the model is implicitly selected based on the endpoint used.
+    title: Model
+  frequency_penalty:
+    anyOf:
+      - type: number
+      - type: "null"
+    description: >
+      Number between -2.0 and 2.0. Positive values penalize new tokens based on their
+      existing frequency in the text, decreasing the model's likelihood to repeat the
+      same line verbatim.
+    title: Frequency Penalty
+    default: 0
+  max_tokens:
+    anyOf:
+      - type: integer
+      - type: "null"
+    description: >
+      The maximum number of tokens that can be generated in the chat completion. This
+      value can be used to control costs for text generated via API. This value is now deprecated in
+      favor of max_completion_tokens.
+    title: Max Tokens
+  max_completion_tokens:
+   anyOf:
+     - type: integer
+     - type: "null"
+   title: Max Completion Tokens
+   description: >
+     An upper bound for the number of tokens that can be generated for a completion,
+     including visible output tokens and reasoning tokens.
+  n:
+    anyOf:
+      - type: integer
+      - type: "null"
+    description: How many chat completion choices to generate for each input message.
+    title: N
+    default: 1
+  presence_penalty:
+    anyOf:
+      - type: number
+      - type: "null"
+    description: >
+      Number between -2.0 and 2.0. Positive values penalize new tokens based on whether
+      they appear in the text so far, increasing the model's likelihood to talk about new topics.
+    title: Presence Penalty
+    default: 0
+  seed:
+    anyOf:
+      - type: integer
+        maximum: 9223372036854776000
+        minimum: -9223372036854776000
+      - type: "null"
+    description: >
+      If specified, the system will make a best effort to sample deterministically, such
+      that repeated requests with the same seed and parameters should return the same result.
+    title: Seed
+  stop:
+    anyOf:
+      - type: string
+      - type: "null"
+    description: Up to four sequences where the API will stop generating further tokens.
+    title: Stop
+    default: []
+  temperature:
+    anyOf:
+      - type: number
+      - type: "null"
+    description: >
+      What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the
+      output more random, while lower values like 0.2 will make it more focused and deterministic.
+      We generally recommend altering this or top_p but not both.
+    title: Temperature
+  top_p:
+    anyOf:
+      - type: number
+      - type: "null"
+    description: >
+      An alternative to sampling with temperature, called nucleus sampling, where the model
+      considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+      comprising the top 10% probability mass are considered. We generally recommend altering this or
+      temperature but not both.
+    title: Top P
+  best_of:
+    anyOf:
+      - type: integer
+      - type: "null"
+    description: >
+      Generates `best_of` completions server-side and returns the "best" (the one with
+      the highest log probability per token).
+    title: Best Of
+    default: 1
+  top_k:
+    anyOf:
+      - type: integer
+      - type: "null"
+    title: Top K
+    description: >
+      Integer that controls the number of top tokens to consider. Set to -1 to consider all tokens.
+  min_p:
+    anyOf:
+      - type: number
+      - type: "null"
+    title: Min P
+    description: >
+      Float that represents the minimum probability for a token to be considered, relative to the
+      probability of the most likely token. Must be in [0, 1]. Set to 0 to disable this.
+  repetition_penalty:
+    anyOf:
+      - type: number
+      - type: "null"
+    title: Repetition Penalty
+    description: >
+      Float that penalizes new tokens based on whether they appear in the prompt and the generated
+      text so far. Values > 1 encourage the model to use new tokens, while values < 1 encourage the
+      model to repeat tokens.
+  include_stop_str_in_output:
+    type: boolean
+    title: Include Stop Str In Output
+    description: Whether to include the stop strings in output text. Defaults to False.
+    default: false
+  ignore_eos:
+    type: boolean
+    title: Ignore Eos
+    description: >
+      Whether to ignore the EOS token and continue generating tokens after the EOS token is
+      generated.
+    default: false
+  min_tokens:
+    type: integer
+    title: Min Tokens
+    description: >
+      Minimum number of tokens to generate per output sequence before EOS or stop_token_ids can be
+      generated.
+    default: 0
+  skip_special_tokens:
+    type: boolean
+    title: Skip Special Tokens
+    description: Whether to skip special tokens in the output.
+    default: true
+  spaces_between_special_tokens:
+    type: boolean
+    title: Spaces Between Special Tokens
+    description: Whether to add spaces between special tokens in the output. Defaults to True.
+    default: true
+  truncate_prompt_tokens:
+    anyOf:
+      - type: integer
+        minimum: 1
+      - type: "null"
+    title: Truncate Prompt Tokens
+    description: >
+      If set to an integer k, will use only the last k tokens from the prompt (i.e., left
+      truncation). Defaults to None (i.e., no truncation).
+  add_generation_prompt:
+    type: boolean
+    title: Add Generation Prompt
+    description: >
+      If true, the generation prompt will be added to the chat template. This is a parameter used by
+      chat template in tokenizer config of the model.
+    default: true
+
+components:
+  schemas:
+    ChatCompletionSystemMessageParam:
+      additionalProperties: false
+      description: >
+        Developer-provided instructions that the model should follow, regardless of messages sent by
+        the user. With o1 models and newer, use developer messages for this purpose instead.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                $ref: "#/components/schemas/ChatCompletionContentPartTextParam"
+              type: array
+          description: The contents of the system message.
+          title: Content
+        role:
+          type: string
+          const: system
+          description: The role of the messages author.
+          title: Role
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+        - content
+        - role
+      title: ChatCompletionSystemMessageParam
+
+    ChatCompletionUserMessageParam:
+      additionalProperties: false
+      description: >
+        Messages sent by an end user, containing prompts or additional context information.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                anyOf:
+                  - $ref: "#/components/schemas/ChatCompletionContentPartTextParam"
+                  - $ref: "#/components/schemas/ChatCompletionContentPartImageParam"
+                  - $ref: "#/components/schemas/RawImageParam"
+                  - $ref: "#/components/schemas/ChatCompletionContentPartImageBytesParam"
+                  - $ref: "#/components/schemas/ChatCompletionContentPartImageGcsParam"
+                  - $ref: "#/components/schemas/ChatCompletionContentPartImageDicomParam"
+              type: array
+          description: The contents of the user message.
+          title: Content
+        role:
+          type: string
+          const: user
+          description: The role of the messages author.
+          title: Role
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+        - content
+        - role
+      title: ChatCompletionUserMessageParam
+
+    ChatCompletionAssistantMessageParam:
+      additionalProperties: false
+      description: >
+        Messages sent by the model in response to user messages.
+      properties:
+        role:
+          type: string
+          const: assistant
+          description: The role of the messages author.
+          title: Role
+        content:
+          anyOf:
+            - type: string
+            - items:
+                anyOf:
+                  - $ref: "#/components/schemas/ChatCompletionContentPartTextParam"
+                  - $ref: "#/components/schemas/ChatCompletionContentPartRefusalParam"
+              type: array
+            - type: "null"
+          description: The contents of the assistant message.
+          title: Content
+        name:
+          type: string
+          title: Name
+        refusal:
+          anyOf:
+            - type: string
+            - type: "null"
+          title: Refusal
+      type: object
+      required:
+        - role
+      title: ChatCompletionAssistantMessageParam
+
+    ChatCompletionContentPartRefusalParam:
+     additionalProperties: false
+     properties:
+       refusal:
+         type: string
+         title: Refusal
+       type:
+         type: string
+         const: refusal
+         title: Type
+     type: object
+     required:
+       - refusal
+       - type
+     title: ChatCompletionContentPartRefusalParam
+
+    ChatCompletionContentPartTextParam:
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+          title: Text
+        type:
+          type: string
+          const: text
+          title: Type
+      type: object
+      required:
+        - text
+        - type
+      title: ChatCompletionContentPartTextParam
+
+    ChatCompletionContentPartImageParam:
+      additionalProperties: false
+      properties:
+        image_url:
+          $ref: "#/components/schemas/ImageURL"
+        type:
+          type: string
+          const: image_url
+          title: Type
+      type: object
+      required:
+        - image_url
+        - type
+      title: ChatCompletionContentPartImageParam
+    RawImageParam:
+      description: >
+        An alternative image URL syntax (not recommended; prefer ImageURL) that allows Vertex AI
+        endpoints to process MedGemma’s native chat format. This enables the endpoint to handle
+        the same prompts used when running MedGemma locally via Hugging Face Transformers.
+      additionalProperties: false
+      properties:
+        image:
+          pattern: ^(https?://.+|\s*data\s*:\s*image/(png|jpeg|jpg|gif)\s*;\s*base64\s*,.+)$
+          title: SingleUrl
+        type:
+          type: string
+          const: image
+          title: Type
+        access_credential:
+          type: string
+          pattern: ^(application_default|[a-zA-Z0-9_\-.]+)$
+          description: >
+            Credentials for accessing the input data when it's not publicly accessible.
+        openslide_pyramid_level:
+          $ref: '#/components/schemas/OpenSlidePyramidLevel'
+        patch_coordinates_list:
+          type: array
+          minItems: 1
+          description: >
+            An array of coordinates defining rectangular regions of interest within the image.
+          items:
+            $ref: '#/components/schemas/PatchCoordinates'
+        extensions:
+          type: object
+          description: >
+            An optional dictionary for flexible communication between the client and server.
+            Consult the API specification on supported keys and their purposes.
+          minProperties: 1
+          properties:
+            key:
+              type: string
+              description: A unique identifier for the extension.
+            value:
+              type: object
+              description: >
+                The value associated with the extension, represented as an embedded JSON object.
+              additionalProperties: true
+      type: object
+      required:
+        - image
+        - type
+      title: RawImageParam
+    ImageURL:
+      additionalProperties: false
+      properties:
+        url:
+          oneOf:
+            - type: string
+              pattern: ^(https?://.+|\s*data\s*:\s*image/(png|jpeg|jpg|gif)\s*;\s*base64\s*,.+)$
+              title: SingleUrl
+            - type: array
+              title: UrlList
+              minItems: 1
+              description: List of URLS to images.
+              items:
+                type: string
+                pattern: ^(https?://.+|\s*data\s*:\s*image/(png|jpeg|jpg|gif)\s*;\s*base64\s*,.+)$
+        access_credential:
+          type: string
+          pattern: ^(application_default|[a-zA-Z0-9_\-.]+)$
+          description: >
+            Credentials for accessing the input data when it's not publicly accessible.
+        openslide_pyramid_level:
+          $ref: '#/components/schemas/OpenSlidePyramidLevel'
+        patch_coordinates_list:
+          type: array
+          minItems: 1
+          description: >
+            An array of coordinates defining rectangular regions of interest within the image.
+          items:
+            $ref: '#/components/schemas/PatchCoordinates'
+        extensions:
+          type: object
+          description: >
+            An optional dictionary for flexible communication between the client and server.
+            Consult the API specification on supported keys and their purposes.
+          minProperties: 1
+          properties:
+            key:
+              type: string
+              description: A unique identifier for the extension.
+            value:
+              type: object
+              description: >
+                The value associated with the extension, represented as an embedded JSON object.
+              additionalProperties: true
+      type: object
+      required:
+        - url
+      title: ImageURL
+
+    ############################################################################
+    # Custom additions to vLLM standard schema to support other image sources. #
+    ############################################################################
+    ChatCompletionContentPartImageBytesParam:
+      additionalProperties: false
+      title: ChatCompletionContentPartImageBytesParam
+      properties:
+        image_bytes:
+          $ref: "#/components/schemas/ImageBytes"
+        type:
+          type: string
+          const: image_bytes
+          title: Type
+      type: object
+      required:
+        - image_bytes
+        - type
+      title: ChatCompletionContentPartImageBytesParam
+
+    ImageBytes:
+      additionalProperties: false
+      title: ImageBytes
+      properties:
+        input_bytes:
+          type: string
+          format: byte
+          description: The image data as a base64-encoded string.
+        openslide_pyramid_level:
+          $ref: '#/components/schemas/OpenSlidePyramidLevel'
+        patch_coordinates_list:
+          type: array
+          minItems: 1
+          description: >
+            An array of coordinates defining rectangular regions of interest within the image.
+          items:
+            $ref: '#/components/schemas/PatchCoordinates'
+        extensions:
+          type: object
+          description: >
+            An optional dictionary for flexible communication between the client and server.
+            Consult the API specification on supported keys and their purposes.
+          minProperties: 1
+          properties:
+            key:
+              type: string
+              description: A unique identifier for the extension.
+            value:
+              type: object
+              description: >
+                The value associated with the extension, represented as an embedded JSON object.
+              additionalProperties: true
+      type: object
+      required:
+        - input_bytes
+      title: ImageBytes
+
+    ChatCompletionContentPartImageGcsParam:
+      additionalProperties: false
+      title: ChatCompletionContentPartImageGcsParam
+      properties:
+        image_gcs:
+          $ref: "#/components/schemas/ImageGCS"
+        type:
+          type: string
+          const: image_gcs
+          title: Type
+      type: object
+      required:
+        - image_gcs
+        - type
+      title: ChatCompletionContentPartImageGcsParam
+
+    ImageGCS:
+      additionalProperties: false
+      title: ImageGCS
+      properties:
+        gcs_source:
+          description: >
+            The source(s) of the GCS image data. This must be exactly one of the following:
+            a single GCS URI, or an array of two or more GCS URIs.
+          oneOf:
+            - type: string
+              title: GCSSingleURI
+              pattern: ^gs://[^/]+(/[^/]+)*/[^/]+\.[^/]+$
+              description: The URI to a single image file in a Google Cloud Storage (GCS) bucket.
+            - type: array
+              title: GCSURIList
+              minItems: 1
+              description: An array of URIs to image files in a Google Cloud Storage (GCS) bucket.
+                Use it to indicate a **related set of images** like a 3D image or volume. The order
+                of the URIs is important, signifying how the individual images are related to each
+                other.
+              items:
+                type: string
+                pattern: ^gs://[^/]+(/[^/]+)*/[^/]+\.[^/]+$
+        access_credential:
+          type: string
+          pattern: ^(application_default|[a-zA-Z0-9_\-.]+)$
+          description: >
+            Credentials for accessing the input data when it's not publicly accessible.
+        openslide_pyramid_level:
+          $ref: '#/components/schemas/OpenSlidePyramidLevel'
+        patch_coordinates_list:
+          type: array
+          minItems: 1
+          description: >
+            An optional array of coordinates defining rectangular regions of interest within the
+            image.
+          items:
+            $ref: '#/components/schemas/PatchCoordinates'
+        extensions:
+          type: object
+          description: >
+            An optional dictionary for flexible communication between the client and server.
+            Consult the API specification on supported keys and their purposes.
+          minProperties: 1
+          properties:
+            key:
+              type: string
+              description: A unique identifier for the extension.
+            value:
+              type: object
+              description: >
+                The value associated with the extension, represented as an embedded JSON object.
+              additionalProperties: true
+      type: object
+      required:
+        - gcs_source
+      title: ImageGCS
+
+    ChatCompletionContentPartImageDicomParam:
+      additionalProperties: false
+      title: ChatCompletionContentPartImageDicomParam
+      properties:
+        image_dicom:
+          $ref: "#/components/schemas/ImageDICOM"
+        type:
+          type: string
+          const: image_dicom
+          title: Type
+      type: object
+      required:
+        - image_dicom
+        - type
+      title: ChatCompletionContentPartImageDicomParam
+
+    ImageDICOM:
+      additionalProperties: false
+      title: ImageDICOM
+      properties:
+        dicom_source:
+          description: >
+            The source(s) of the DICOM data. This must be exactly one of the following:
+            a single DICOM instance URI, a single DICOM series URI, or an array of two or more
+            DICOM instance URIs.
+          oneOf:
+            - type: string
+              title: DICOMInstanceURI
+              pattern: ^https://.+/studies/[0-9\.]{1,64}/series/[0-9\.]{1,64}/instances/[0-9\.]{1,64}$
+              description: >
+                The URI to a single DICOM SOP Instance on a DICOMweb Store. Use it to indicate a
+                **single image**. Examples include a chest X-ray or a single slice of a CT scan.
+            - type: string
+              title: DICOMSeriesURI
+              pattern: ^https://.+/studies/[0-9\.]{1,64}/series/[0-9\.]{1,64}$
+              description: >
+                The URI to a DICOM Series on a DICOMweb Store. Use it to indicate a 3D image like a
+                CT scan. Refer to the API specification for more details on how the series is
+                processed.
+            - type: array
+              title: DICOMInstanceURIList
+              minItems: 1
+              description: An array of URIs to DICOM SOP Instances on a DICOMweb Store. Use it to
+                indicate a **related set of images**, typically representing a 3D image or volume
+                like a CT scan. The order of the URIs is important, signifying how the individual
+                slices are related to each other.
+              items:
+                type: string
+                pattern: ^https://.+/studies/[0-9\.]{1,64}/series/[0-9\.]{1,64}/instances/[0-9\.]{1,64}$
+        access_credential:
+          type: string
+          pattern: ^(application_default|[a-zA-Z0-9_\-.]+)$
+          description: >
+            Credentials for accessing the input data when it's not publicly accessible.
+        patch_coordinates_list:
+          type: array
+          minItems: 1
+          description: >
+            An optional array of coordinates defining rectangular regions of interest within the image.
+          items:
+            $ref: '#/components/schemas/PatchCoordinates'
+        extensions:
+          type: object
+          description: >
+            An optional dictionary for flexible communication between the client and server.
+            Consult the API specification on supported keys and their purposes.
+          minProperties: 1
+          properties:
+            key:
+              type: string
+              description: A unique identifier for the extension.
+            value:
+              type: object
+              description: >
+                The value associated with the extension, represented as an embedded JSON object.
+              additionalProperties: true
+      type: object
+      required:
+        - dicom_source
+      title: ImageDICOM
+
+    PatchCoordinates:
+      additionalProperties: false
+      title: PatchCoordinates
+      type: object
+      properties:
+        x_origin:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The x-coordinate of the top-left corner of the rectangular patch.
+        y_origin:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The y-coordinate of the top-left corner of the rectangular patch.
+        width:
+          type: integer
+          format: int64
+          minimum: 1
+          description: >
+            The width of the rectangular patch, extending to the right from 'x_origin'.
+            Note that if the underlying model does not support custom patch sizes, this
+            value will be disregarded. Refer to the API specification for details on the
+            default patch size and whether custom sizes are supported.
+        height:
+          type: integer
+          format: int64
+          minimum: 1
+          description: >
+            The height of the rectangular patch, extending downwards from 'y_origin'.
+            Note that if the underlying model does not support custom patch sizes, this
+            value will be disregarded. Refer to the API specification for details on the
+            default patch size and whether custom sizes are supported.
+      required:
+        - x_origin
+        - y_origin
+
+    OpenSlidePyramidLevel:
+      additionalProperties: false
+      title: OpenSlidePyramidLevel
+      type: object
+      description: >
+        Applicable to Pathlogy images only. Parameters for selecting a specific layer from
+        a multi dimensional OpenSlide image; refer to https://openslide.org/ for more details.
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: >
+            The zero-based index of the desired layer (allows both positive and
+            negative indexing, e.g., -1 for the last layer). Mutually exclusive with an dimention
+            identifiers ('width' and 'height').
+        width:
+          type: integer
+          format: int32
+          minimum: 1
+          description: >
+            The width of the desired dimension; has to be paired with 'height'. Mutually exclusive
+            with 'index'.
+        height:
+          type: integer
+          format: int32
+          minimum: 1
+          description: >
+            The height of the desired dimension; has to be paired with 'width'. Mutually exclusive
+            with 'index'.
+      # An image locator must specify either an index or a pair of width and height:
+      oneOf:
+        - required:
+          - index
+          properties:
+            width: false
+            height: false
+        - required:
+          - width
+          - height
+          properties:
+            index: false
