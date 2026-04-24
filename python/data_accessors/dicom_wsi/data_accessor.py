@@ -61,7 +61,7 @@ class _LocalData:
   """Local data for DICOM WSI."""
 
   patches: Sequence[dicom_slide.DicomPatch]
-  icc_profile_transformation: Optional[ImageCms.ImageCmsTransform]
+  icc_profile_transformation: ImageCms.ImageCmsTransform | None
   frame_cache: local_dicom_slide_cache.InMemoryDicomSlideCache
 
 
@@ -114,7 +114,7 @@ def _get_ez_wsi_state(extensions: Mapping[str, Any]) -> Mapping[str, Any]:
 
 def _fetch_image_bytes(
     patch: dicom_slide.DicomPatch,
-    icc_profile_transformation: Optional[ImageCms.ImageCmsTransform],
+    icc_profile_transformation: ImageCms.ImageCmsTransform | None,
 ) -> np.ndarray:
   """Returns patch bytes for DICOM imaging."""
   try:
@@ -155,7 +155,7 @@ def _get_load_whole_slide_frame_ratio(extensions: Mapping[str, Any]) -> int:
 
 def _pre_load_slide_patches(
     ds: dicom_slide.DicomSlide,
-    level: Union[dicom_slide.Level, dicom_slide.ResizedLevel],
+    level: dicom_slide.Level | dicom_slide.ResizedLevel,
     patches: Sequence[dicom_slide.DicomPatch],
     blocking: bool,
     load_whole_slide_frame_ratio: int,
@@ -177,11 +177,11 @@ def _load_slide_level(
     instance: data_accessor_definition.DicomWSIImage,
     settings: configuration.ConfigurationSettings,
     require_fully_in_source_image: bool,
-    resize_level_dim: Optional[image_dimension_utils.ImageDimensions],
-    target_icc_profile: Optional[ImageCms.core.CmsProfile],
+    resize_level_dim: image_dimension_utils.ImageDimensions | None,
+    target_icc_profile: ImageCms.core.CmsProfile | None,
     series_path_ds_level: tuple[
         dicom_path.Path,
-        Union[dicom_slide.DicomSlide, dicom_slide.DicomMicroscopeImage],
+        dicom_slide.DicomSlide | dicom_slide.DicomMicroscopeImage,
         dicom_slide.Level,
     ],
 ) -> _LocalData:

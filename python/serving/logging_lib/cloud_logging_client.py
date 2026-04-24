@@ -134,7 +134,7 @@ class CloudLoggingClient(
 
   # lock for log makes access to singleton
   # safe across threads. Logging used in main thread and ack_timeout_mon
-  _singleton_instance: Optional[CloudLoggingClient] = None
+  _singleton_instance: CloudLoggingClient | None = None
   _startup_message_logged = False
   _singleton_lock = threading.RLock()
 
@@ -258,7 +258,7 @@ def do_not_log_startup_msg() -> None:
 
 def debug(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with debug severity.
@@ -273,7 +273,7 @@ def debug(
 
 def timed_debug(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with debug severity and elapsed time since last timed debug log.
@@ -288,7 +288,7 @@ def timed_debug(
 
 def info(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with info severity.
@@ -303,7 +303,7 @@ def info(
 
 def warning(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with warning severity.
@@ -318,7 +318,7 @@ def warning(
 
 def error(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with error severity.
@@ -333,7 +333,7 @@ def error(
 
 def critical(
     msg: str,
-    *struct: Union[Mapping[str, Any], Exception, None],
+    *struct: Mapping[str, Any] | Exception | None,
     stack_frames_back: int = 0,
 ) -> None:
   """Logs with critical severity.
@@ -362,7 +362,7 @@ def set_per_thread_log_signatures(val: bool) -> None:
   logger().per_thread_log_signatures = val
 
 
-def get_build_version(clip_length: Optional[int] = None) -> str:
+def get_build_version(clip_length: int | None = None) -> str:
   if clip_length is not None and clip_length >= 0:
     return logger().build_version[:clip_length]
   return logger().build_version

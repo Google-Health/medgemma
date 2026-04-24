@@ -52,7 +52,7 @@ THREAD_POOL_TIMEOUT_FLAG = flags.DEFINE_integer(
 )
 
 
-def _load_multi_string(val: Optional[str]) -> Optional[Union[List[str], str]]:
+def _load_multi_string(val: Optional[str]) -> Optional[Union[list[str], str]]:
   if val is None:
     return None
   try:

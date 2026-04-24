@@ -81,7 +81,7 @@ def _get_compressed_dicom_frame_bytes(
 
 def _crop_target_frame(
     frame_pixels_start: int, frame_dim: int, patch_origin: int, patch_dim: int
-) -> Tuple[int, int]:
+) -> tuple[int, int]:
   frame_pixels_start -= patch_origin
   start_pos = max(frame_pixels_start, 0)
   end_pos = min(frame_pixels_start + frame_dim, patch_dim)

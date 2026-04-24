@@ -59,7 +59,7 @@ class CloudLoggerInstanceExceptionError(Exception):
 
 
 def _merge_struct(
-    dict_tuple: Tuple[Union[Mapping[str, Any], Exception, None], ...],
+    dict_tuple: tuple[Union[Mapping[str, Any], Exception, None], ...],
 ) -> Optional[MutableMapping[str, str]]:
   """Merges a list of dict and ordered dicts.
 
@@ -677,7 +677,7 @@ class CloudLoggingClientInstance:
       self,
       msg: str,
       severity: _LogSeverity,
-      struct: Tuple[Union[Mapping[str, Any], Exception, None], ...],
+      struct: tuple[Union[Mapping[str, Any], Exception, None], ...],
       stack_frames_back: int = 0,
   ):
     """Posts structured log message, adds current_msg id to log structure.

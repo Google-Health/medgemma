@@ -32,7 +32,7 @@ def validate_int(val: Any) -> int:
   return val
 
 
-def validate_str_list(val: Any) -> List[str]:
+def validate_str_list(val: Any) -> list[str]:
   if not isinstance(val, List):
     raise ValidationError('not list')
   for v in val:
@@ -57,13 +57,13 @@ def validate_str(val: Any) -> str:
   return val
 
 
-def validate_list(val: Any) -> List[Any]:
+def validate_list(val: Any) -> list[Any]:
   if not isinstance(val, list):
     raise ValidationError('not list')
   return val
 
 
-def validate_not_empty_list(val: Any) -> List[Any]:
+def validate_not_empty_list(val: Any) -> list[Any]:
   if not isinstance(val, list) or not val:
     raise ValidationError('not list')
   return val

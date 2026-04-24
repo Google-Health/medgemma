@@ -55,7 +55,7 @@ class MockRedisClient:
     self._pipeline_results = []
     return self
 
-  def execute(self) -> List[Any]:
+  def execute(self) -> list[Any]:
     if self._pipeline_results is None:
       raise ValueError('Pipeline not initialized.')
     return self._pipeline_results
@@ -85,7 +85,7 @@ class MockRedisClient:
     except KeyError:
       pass
 
-  def get(self, key: str) -> Optional[bytes]:
+  def get(self, key: str) -> bytes | None:
     key_entry = self._mock_data_dict.get(key)
     if key_entry is None:
       return self._handle_pipeline_result(None)

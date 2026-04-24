@@ -168,9 +168,9 @@ class _MocGcpEnv(contextlib.ExitStack):
 
   def get_dicom_icc_profile(
       self,
-      gcs_bucket: Optional[str] = None,
-      redis_ip: Optional[str] = None,
-      redis_port: Optional[int] = None,
+      gcs_bucket: str | None = None,
+      redis_ip: str | None = None,
+      redis_port: int | None = None,
       testing: bool = True,
   ) -> bytes:
     ds = self.dicom_slide

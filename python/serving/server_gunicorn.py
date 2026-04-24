@@ -71,8 +71,7 @@ def main(argv: Sequence[str]) -> None:
   # Get schema validator.
   local_path = os.path.dirname(__file__)
   with open(
-      os.path.join(local_path, 'vertex_schemata', 'request.yaml'), 'r'
-  ) as f:
+      os.path.join(local_path, 'vertex_schemata', 'request.yaml')) as f:
     instance_validator = jsonschema.Draft202012Validator(yaml.safe_load(f))
 
   # Construct conversation to prompt converter callable.

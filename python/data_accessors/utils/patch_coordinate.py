@@ -123,7 +123,7 @@ def parse_patch_coordinates(
     default_width: int,
     default_height: int,
     require_patch_dim_match_default_dim: bool,
-) -> List[PatchCoordinate]:
+) -> list[PatchCoordinate]:
   """Returns patch coodianates."""
   result = []
   if not isinstance(patch_coordinates, List):

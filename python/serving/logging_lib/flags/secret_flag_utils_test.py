@@ -41,7 +41,7 @@ def _create_mock_secret_value_response(
 
 def _create_mock_secret_version_response(
     secret_version_prefix: str,
-    version_numbers: List[str],
+    version_numbers: list[str],
 ) -> list[secretmanager.ListSecretVersionsResponse]:
   version_list = []
   for version_number in version_numbers:
@@ -152,7 +152,7 @@ class SecretFlagUtilsTest(parameterized.TestCase):
       ),
       dict(
           testcase_name='defined_dict_bytes',
-          data='{"abc": "123"}'.encode('utf-8'),
+          data=b'{"abc": "123"}',
           expected_value={'abc': '123'},
       ),
   ])
