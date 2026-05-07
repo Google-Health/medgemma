@@ -45,12 +45,6 @@ flag_map = {
         "Maximum model length.",
         required=False,
     ),
-    "swap_space": flags.DEFINE_float(
-        "swap-space",
-        None,
-        "Swap space in GB.",
-        required=False,
-    ),
     "enable_chunked_prefill": flags.DEFINE_bool(
         "enable-chunked-prefill",
         None,

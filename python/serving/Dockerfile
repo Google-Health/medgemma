@@ -56,20 +56,12 @@ FROM google/cloud-sdk:stable AS gcloud_builder
 
 # ----------------------------------------------------------------------------
 
-FROM nvcr.io/nvidia/tritonserver:25.06-vllm-python-py3
+FROM nvcr.io/nvidia/tritonserver:26.04-vllm-python-py3
 
 WORKDIR /
 # Copy in minimal gcloud install
 COPY --from=gcloud_builder /usr/lib/google-cloud-sdk /usr/lib/google-cloud-sdk
 ENV PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
-
-# Prevent compatibility-breaking NCCL updates.
-RUN apt-mark hold libnccl-dev libnccl2 && \
-    # apt upgrade
-    apt-get update && \
-    apt-get -y upgrade && \
-    # Cleanup cached files.
-    rm -rf /var/lib/apt/lists/*
 
 # Copy the code and python environment from the prep image
 COPY --from=prep /payload /
