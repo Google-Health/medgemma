@@ -4,13 +4,12 @@
 #
 #    pip-compile --allow-unsafe --generate-hashes medgemma_requirements.in
 #
-
 absl-py==2.3.1 \
     --hash=sha256:a97820526f7fbfd2ec1bce83f3f25e3a14840dac0d8e02a0b71cd75db3f77fc9 \
     --hash=sha256:eeecf07f0c2a93ace0772c92e596ace6d3d3996c042b2128459aaae2a76de11d
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
 annotated-doc==0.0.4 \
@@ -747,7 +746,7 @@ numpy==1.26.4 \
     --hash=sha256:ffa75af20b44f8dba823498024771d5ac50620e6915abac414251bd971b4529f
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/requirements.in
     #   ez-wsi-dicomweb
     #   imagecodecs
@@ -1276,7 +1275,7 @@ requests-mock==1.9.3 \
     --hash=sha256:8d72abe54546c1fc9696fa1516672f1031d72a55a1d66c85184f972a24ba0eba
     # via
     #   -r ../data_accessors/requirements.in
-    #   -r medgemma_requirements.in
+    #   -r requirements.in
     #   -r serving_framework/triton/requirements.in
     #   ez-wsi-dicomweb
 requests-toolbelt==1.0.0 \
@@ -1482,7 +1481,7 @@ tqdm==4.67.3 \
 transformers==5.2.0 \
     --hash=sha256:0088b8b46ccc9eff1a1dca72b5d618a5ee3b1befc3e418c9512b35dea9f9a650 \
     --hash=sha256:9ecaf243dc45bee11a7d93f8caf03746accc0cb069181bbf4ad8566c53e854b4
-    # via -r medgemma_requirements.in
+    # via -r requirements.in
 tritonclient==2.56.0 \
     --hash=sha256:a28734a028a1f02429d5463b6dccc3fdb0a13308ef74d9eca8a1e5dff8c60913 \
     --hash=sha256:b0fe8ab57741f8ffa0fa9e21f1ee78610be588b37bc88eb2d15492a2a652f6ad \
@@ -1513,9 +1512,9 @@ typing-inspect==0.9.0 \
     --hash=sha256:9ee6fc59062311ef8547596ab6b955e1b8aa46242d854bfc78f4f6b0eff35f9f \
     --hash=sha256:b23fc42ff6f6ef6954e4852c1fb512cdd18dbea03134f91f856a95ccc9461f78
     # via dataclasses-json
-urllib3==2.6.3 \
-    --hash=sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed \
-    --hash=sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4
+urllib3==2.7.0 \
+    --hash=sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c \
+    --hash=sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897
     # via
     #   requests
     #   tritonclient
