@@ -2,7 +2,7 @@
 name: Feature Request
 about: Suggest an idea or improvement
 title: 'Request: <brief title of your feature request>'
-labels: 'enhancement', 'needs triage'
+labels: 'enhancement, needs triage'
 assignees: ''
 ---
 
