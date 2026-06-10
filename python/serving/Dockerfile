@@ -56,9 +56,18 @@ FROM google/cloud-sdk:stable AS gcloud_builder
 
 # ----------------------------------------------------------------------------
 
-FROM nvcr.io/nvidia/tritonserver:26.04-vllm-python-py3
+FROM nvcr.io/nvidia/tritonserver:26.05-vllm-python-py3
 
 WORKDIR /
+
+# Patch OS-level vulnerabilities while preserving CUDA/NVIDIA library
+# compatibility. These packages are tightly coupled to PyTorch and vLLM;
+# upgrading them breaks shared library linkage (e.g. libcusparseLt.so.0).
+RUN dpkg -l | awk '/^ii/ && ($2 ~ /cuda|nccl|cublas|cusparse|cudnn|cutensor|cufft|curand|cusolver|nvjpeg|libnv|tensorrt/) {print $2}' | xargs apt-mark hold && \
+    apt-get update && \
+    apt-get -y upgrade && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy in minimal gcloud install
 COPY --from=gcloud_builder /usr/lib/google-cloud-sdk /usr/lib/google-cloud-sdk
 ENV PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
