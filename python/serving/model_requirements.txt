@@ -1,0 +1,12 @@
+# Requirements for fixing base image vulnerabilities in system site-packages.
+# These packages are pre-installed in the Triton base image with vulnerable
+# versions; upgrading them here patches the system Python environment.
+#
+# idna 3.18: fixes CVE-2026-45409 (idna 3.13 in base image)
+idna==3.18 \
+    --hash=sha256:ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848 \
+    --hash=sha256:7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2
+# aiohttp 3.14.0: fixes CVE-2026-34993 (aiohttp 3.13.5 in base image)
+aiohttp==3.14.0 \
+    --hash=sha256:78d6f9286a629ce52728430afe18f8ed2b6c39a1fddb3802d7244b9983910ad2 \
+    --hash=sha256:2882de819734c715fd1b9c11c97e09fa020d14438203d1d354d8ed1702791c9b

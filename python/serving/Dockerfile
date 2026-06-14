@@ -63,9 +63,12 @@ WORKDIR /
 # Patch OS-level vulnerabilities while preserving CUDA/NVIDIA library
 # compatibility. These packages are tightly coupled to PyTorch and vLLM;
 # upgrading them breaks shared library linkage (e.g. libcusparseLt.so.0).
+# Remove OS python3-pip/wheel packages — their dpkg metadata triggers
+# vulnerability scanner findings with no upstream Ubuntu fix available.
 RUN dpkg -l | awk '/^ii/ && ($2 ~ /cuda|nccl|cublas|cusparse|cudnn|cutensor|cufft|curand|cusolver|nvjpeg|libnv|tensorrt/) {print $2}' | xargs apt-mark hold && \
     apt-get update && \
     apt-get -y upgrade && \
+    apt-get remove -y python3-pip python3-pip-whl python3-wheel && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy in minimal gcloud install
@@ -74,6 +77,15 @@ ENV PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
 
 # Copy the code and python environment from the prep image
 COPY --from=prep /payload /
+
+# Fix vulnerable packages in the base image system site-packages.
+# pytest and virtualenv are not needed at runtime; removing virtualenv also
+# eliminates its embedded pip/wheel wheels that trigger scanner findings.
+# idna is upgraded to fix CVE-2026-45409; aiohttp to fix CVE-2026-34993.
+COPY ./python/serving/model_requirements.txt /model_requirements.txt
+RUN python3 -m pip install --require-hashes -r /model_requirements.txt && \
+    python3 -m pip uninstall -y pytest virtualenv && \
+    rm /model_requirements.txt
 
 # Copy mirrored source code from the prep image
 COPY --from=prep /source-mirror /source-mirror/
