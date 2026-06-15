@@ -17,7 +17,6 @@
 import json
 import os
 import sys
-from typing import List, Optional, Union
 
 from absl import flags
 
@@ -52,7 +51,7 @@ THREAD_POOL_TIMEOUT_FLAG = flags.DEFINE_integer(
 )
 
 
-def _load_multi_string(val: Optional[str]) -> Optional[Union[List[str], str]]:
+def _load_multi_string(val: str | None) -> list[str] | str | None:
   if val is None:
     return None
   try:

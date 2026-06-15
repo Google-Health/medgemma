@@ -14,7 +14,7 @@
 
 """Converts Embedding Requests and Responses to json and vice versa."""
 
-from typing import Any, List, Mapping
+from typing import Any, Mapping
 
 
 class ValidationError(Exception):
@@ -32,8 +32,8 @@ def validate_int(val: Any) -> int:
   return val
 
 
-def validate_str_list(val: Any) -> List[str]:
-  if not isinstance(val, List):
+def validate_str_list(val: Any) -> list[str]:
+  if not isinstance(val, list):
     raise ValidationError('not list')
   for v in val:
     if not isinstance(v, str) or not v:
@@ -57,13 +57,13 @@ def validate_str(val: Any) -> str:
   return val
 
 
-def validate_list(val: Any) -> List[Any]:
+def validate_list(val: Any) -> list[Any]:
   if not isinstance(val, list):
     raise ValidationError('not list')
   return val
 
 
-def validate_not_empty_list(val: Any) -> List[Any]:
+def validate_not_empty_list(val: Any) -> list[Any]:
   if not isinstance(val, list) or not val:
     raise ValidationError('not list')
   return val

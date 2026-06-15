@@ -30,7 +30,7 @@ import sys
 import threading
 import time
 import traceback
-from typing import Any, Mapping, MutableMapping, Optional, Tuple, Union
+from typing import Any, Mapping, MutableMapping
 
 from absl import logging as absl_logging
 import google.auth
@@ -59,8 +59,8 @@ class CloudLoggerInstanceExceptionError(Exception):
 
 
 def _merge_struct(
-    dict_tuple: Tuple[Union[Mapping[str, Any], Exception, None], ...],
-) -> Optional[MutableMapping[str, str]]:
+    dict_tuple: tuple[Mapping[str, Any] | Exception | None, ...],
+) -> MutableMapping[str, str] | None:
   """Merges a list of dict and ordered dicts.
 
        * for dict adds item in key sorted order
@@ -191,9 +191,9 @@ class CloudLoggingClientInstance:
   # within a process.
   _global_lock = threading.Lock()
   # Cloud logging handler init at process level.
-  _cloud_logging_handler: Optional[
-      cloud_logging.handlers.CloudLoggingHandler
-  ] = None
+  _cloud_logging_handler: cloud_logging.handlers.CloudLoggingHandler | None = (
+      None
+  )
   _cloud_logging_handler_init_params = ''
 
   @classmethod
@@ -254,7 +254,7 @@ class CloudLoggingClientInstance:
       self,
       log_name: str = 'python',
       gcp_project_to_write_logs_to: str = '',
-      gcp_credentials: Optional[google.auth.credentials.Credentials] = None,
+      gcp_credentials: google.auth.credentials.Credentials | None = None,
       pod_hostname: str = '',
       pod_uid: str = '',
       enable_structured_logging: bool = True,
@@ -336,7 +336,7 @@ class CloudLoggingClientInstance:
       self._python_logger = self._init_cloud_handler()
     return self._python_logger
 
-  def _get_python_logger_name(self) -> Optional[str]:
+  def _get_python_logger_name(self) -> str | None:
     return None if self._log_all_python_logs_to_cloud else 'DPASLogger'
 
   def _get_cloud_logging_handler_init_params(self) -> str:
@@ -658,7 +658,7 @@ class CloudLoggingClientInstance:
     raise ValueError('Message exceeds logging msg length limit.')
 
   def _merge_signature(
-      self, struct: Optional[MutableMapping[str, Any]]
+      self, struct: MutableMapping[str, str] | None
   ) -> MutableMapping[str, Any]:
     """Adds signature to logging struct.
 
@@ -677,7 +677,7 @@ class CloudLoggingClientInstance:
       self,
       msg: str,
       severity: _LogSeverity,
-      struct: Tuple[Union[Mapping[str, Any], Exception, None], ...],
+      struct: tuple[Mapping[str, Any] | Exception | None, ...],
       stack_frames_back: int = 0,
   ):
     """Posts structured log message, adds current_msg id to log structure.
@@ -718,7 +718,7 @@ class CloudLoggingClientInstance:
   def debug(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with debug severity.
@@ -733,7 +733,7 @@ class CloudLoggingClientInstance:
   def timed_debug(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with debug severity and elapsed time since last timed debug log.
@@ -752,7 +752,7 @@ class CloudLoggingClientInstance:
   def info(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with info severity.
@@ -767,7 +767,7 @@ class CloudLoggingClientInstance:
   def warning(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with warning severity.
@@ -782,7 +782,7 @@ class CloudLoggingClientInstance:
   def error(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with error severity.
@@ -797,7 +797,7 @@ class CloudLoggingClientInstance:
   def critical(
       self,
       msg: str,
-      *struct: Union[Mapping[str, Any], Exception, None],
+      *struct: Mapping[str, Any] | Exception | None,
       stack_frames_back: int = 0,
   ) -> None:
     """Logs with critical severity.

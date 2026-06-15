@@ -17,7 +17,7 @@ import contextlib
 import os
 import shutil
 import tempfile
-from typing import Any, Mapping, MutableMapping, Optional, Sequence, Tuple
+from typing import Any, Mapping, MutableMapping, Sequence
 from unittest import mock
 
 from absl.testing import absltest
@@ -44,14 +44,14 @@ _MOCK_TOKEN = 'MOCK_AUTH_TOKEN'
 
 
 def _mock_apply_credentials(
-    headers: MutableMapping[Any, Any], token: Optional[str] = None
+    headers: MutableMapping[Any, Any], token: str | None = None
 ) -> None:
-  headers['authorization'] = 'Bearer {}'.format(token or _MOCK_TOKEN)
+  headers['authorization'] = f'Bearer {token or _MOCK_TOKEN}'
 
 
 def _get_mocked_credentials(
-    scopes: Optional[Sequence[str]],
-) -> Tuple[google.auth.credentials.Credentials, str]:
+    scopes: Sequence[str] | None,
+) -> tuple[google.auth.credentials.Credentials, str]:
   del scopes  # unused
   credentials_mock = mock.create_autospec(
       google.auth.credentials.Credentials, instance=True

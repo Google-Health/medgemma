@@ -15,7 +15,7 @@
 """Shared dataclasses across requests and responses for Pete."""
 
 import dataclasses
-from typing import Any, List, Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 import numpy as np
 
@@ -123,10 +123,10 @@ def parse_patch_coordinates(
     default_width: int,
     default_height: int,
     require_patch_dim_match_default_dim: bool,
-) -> List[PatchCoordinate]:
+) -> list[PatchCoordinate]:
   """Returns patch coodianates."""
   result = []
-  if not isinstance(patch_coordinates, List):
+  if not isinstance(patch_coordinates, list):
     raise InvalidCoordinateError('patch_coordinates is not list')
   for patch_coordinate in patch_coordinates:
     try:

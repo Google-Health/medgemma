@@ -15,7 +15,7 @@
 
 import io
 import math
-from typing import Any, Iterator, Mapping, Optional, Sequence, Tuple, Union
+from typing import Any, Iterator, Mapping, Sequence
 
 from ez_wsi_dicomweb import dicom_frame_decoder
 import numpy as np
@@ -81,7 +81,7 @@ def _get_compressed_dicom_frame_bytes(
 
 def _crop_target_frame(
     frame_pixels_start: int, frame_dim: int, patch_origin: int, patch_dim: int
-) -> Tuple[int, int]:
+) -> tuple[int, int]:
   frame_pixels_start -= patch_origin
   start_pos = max(frame_pixels_start, 0)
   end_pos = min(frame_pixels_start + frame_dim, patch_dim)
@@ -97,7 +97,7 @@ def _pad_channel(frame: np.ndarray) -> np.ndarray:
 
 def _get_frame(
     dcm: pydicom.FileDataset,
-    dicom_frames: Union[Sequence[bytes], np.ndarray],
+    dicom_frames: Sequence[bytes] | np.ndarray,
     frame_index: int,
     frame_x_offset: int,
     frame_y_offset: int,
@@ -139,8 +139,8 @@ def _get_frame(
 
 def _get_patch(
     dcm: pydicom.FileDataset,
-    dicom_frames: Union[Sequence[bytes], np.ndarray],
-    resize_image_dimensions: Optional[image_dimension_utils.ImageDimensions],
+    dicom_frames: Sequence[bytes] | np.ndarray,
+    resize_image_dimensions: image_dimension_utils.ImageDimensions | None,
     pc: patch_coordinate_module.PatchCoordinate,
     validate_patch_in_dim: bool,
 ) -> np.ndarray:
@@ -245,8 +245,8 @@ def _get_patch(
 
 def _create_icc_profile_image_transformation(
     dcm: pydicom.FileDataset,
-    target_icc_profile: Optional[ImageCms.core.CmsProfile],
-) -> Optional[ImageCms.ImageCmsTransform]:
+    target_icc_profile: ImageCms.core.CmsProfile | None,
+) -> ImageCms.ImageCmsTransform | None:
   """Transforms image to target ICC profile."""
   if target_icc_profile is None:
     return None
@@ -264,9 +264,9 @@ def _create_icc_profile_image_transformation(
 
 def _decode_dicom_image(
     dcm: pydicom.FileDataset,
-    target_icc_profile: Optional[ImageCms.core.CmsProfile],
+    target_icc_profile: ImageCms.core.CmsProfile | None,
     patch_coordinates: Sequence[patch_coordinate_module.PatchCoordinate],
-    resize_image_dimensions: Optional[image_dimension_utils.ImageDimensions],
+    resize_image_dimensions: image_dimension_utils.ImageDimensions | None,
     patch_required_to_be_fully_in_source_image: bool,
 ) -> Iterator[np.ndarray]:
   """Decode DICOM image and return decoded image bytes."""
