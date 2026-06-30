@@ -81,7 +81,7 @@ COPY --from=prep /payload /
 # Fix vulnerable packages in the base image system site-packages.
 # pytest and virtualenv are not needed at runtime; removing virtualenv also
 # eliminates its embedded pip/wheel wheels that trigger scanner findings.
-# idna is upgraded to fix CVE-2026-45409; aiohttp to fix CVE-2026-34993.
+# See model_requirements.txt for the full list of upgraded packages and CVEs.
 COPY ./python/serving/model_requirements.txt /model_requirements.txt
 RUN python3 -m pip install --require-hashes -r /model_requirements.txt && \
     python3 -m pip uninstall -y pytest virtualenv && \
