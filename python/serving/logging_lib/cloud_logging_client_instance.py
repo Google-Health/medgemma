@@ -829,7 +829,8 @@ class CloudLoggingClientInstance:
 # will seg-fault (python queue wait). This can be avoided, by stopping the
 # background transport prior to forking and then restarting the transport
 # following the fork.
-os.register_at_fork(
-    before=CloudLoggingClientInstance.fork_shutdown,  # pylint: disable=protected-access
-    after_in_child=CloudLoggingClientInstance._init_fork_module_state,  # pylint: disable=protected-access
-)
+if hasattr(os, 'register_at_fork'):
+  os.register_at_fork(
+      before=CloudLoggingClientInstance.fork_shutdown,  # pylint: disable=protected-access
+      after_in_child=CloudLoggingClientInstance._init_fork_module_state,  # pylint: disable=protected-access
+  )

@@ -386,7 +386,8 @@ def set_log_trace_key(key: str) -> None:
 # will seg-fault (python queue wait). This  can be avoided, by stoping and
 # the background transport prior to forking and then restarting the transport
 # following the fork.
-os.register_at_fork(
-    before=CloudLoggingClient._fork_shutdown,  # pylint: disable=protected-access
-    after_in_child=CloudLoggingClient._init_fork_module_state,  # pylint: disable=protected-access
-)
+if hasattr(os, 'register_at_fork'):
+  os.register_at_fork(
+      before=CloudLoggingClient._fork_shutdown,  # pylint: disable=protected-access
+      after_in_child=CloudLoggingClient._init_fork_module_state,  # pylint: disable=protected-access
+  )

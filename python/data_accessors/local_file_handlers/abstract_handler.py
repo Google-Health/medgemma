@@ -15,7 +15,11 @@
 
 import abc
 import io
-from typing import Any, Iterator, Mapping, Self, Sequence, Union
+from typing import Any, Iterator, Mapping, Sequence, Union
+try:
+  from typing import Self  # type: ignore
+except ImportError:
+  Self = Any
 
 import numpy as np
 
@@ -24,6 +28,7 @@ from data_accessors import data_accessor_const
 from data_accessors import data_accessor_errors
 from data_accessors.utils import json_validation_utils
 from data_accessors.utils import patch_coordinate
+
 
 _InstanceJsonKeys = data_accessor_const.InstanceJsonKeys
 
