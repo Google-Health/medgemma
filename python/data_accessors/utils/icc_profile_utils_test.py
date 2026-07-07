@@ -65,7 +65,7 @@ class ICCProfileUtilsTest(parameterized.TestCase):
         {_InstanceJsonKeys.TRANSFORM_IMAGING_TO_ICC_PROFILE: profile_name}
     )
     self.assertEqual(
-        profile.tobytes(),
+        profile.tobytes(),  # pyrefly: ignore[missing-attribute]
         dicom_slide.get_adobergb_icc_profile_bytes(),
     )
 
@@ -75,7 +75,7 @@ class ICCProfileUtilsTest(parameterized.TestCase):
         {_InstanceJsonKeys.TRANSFORM_IMAGING_TO_ICC_PROFILE: profile_name}
     )
     self.assertEqual(
-        profile.tobytes(),
+        profile.tobytes(),  # pyrefly: ignore[missing-attribute]
         dicom_slide.get_srgb_icc_profile_bytes(),
     )
 
@@ -85,7 +85,7 @@ class ICCProfileUtilsTest(parameterized.TestCase):
         {_InstanceJsonKeys.TRANSFORM_IMAGING_TO_ICC_PROFILE: profile_name}
     )
     self.assertEqual(
-        profile.tobytes(), dicom_slide.get_rommrgb_icc_profile_bytes()
+        profile.tobytes(), dicom_slide.get_rommrgb_icc_profile_bytes()  # pyrefly: ignore[missing-attribute]
     )
 
   @parameterized.parameters(['displayP3', 'DISPLAYP3'])
@@ -94,7 +94,7 @@ class ICCProfileUtilsTest(parameterized.TestCase):
         {_InstanceJsonKeys.TRANSFORM_IMAGING_TO_ICC_PROFILE: profile_name}
     )
     self.assertEqual(
-        profile.tobytes(), dicom_slide.get_displayp3_icc_profile_bytes()
+        profile.tobytes(), dicom_slide.get_displayp3_icc_profile_bytes()  # pyrefly: ignore[missing-attribute]
     )
 
 

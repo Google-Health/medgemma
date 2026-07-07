@@ -125,7 +125,7 @@ class TritonStreamingServerModelRunner(model_runner.ModelRunner):
     else:
       input_map = model_input
 
-    model_version = str(model_version) if model_version is not None else ""
+    model_version = str(model_version) if model_version is not None else ""  # pyrefly: ignore[bad-assignment]
 
     inputs = []
     for key, data in input_map.items():

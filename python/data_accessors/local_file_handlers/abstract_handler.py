@@ -59,7 +59,7 @@ class InputFileIterator:
       raise StopIteration()
     if not self._cache_set:
       try:
-        self._cache_value = next(self._data_iterator)
+        self._cache_value = next(self._data_iterator)  # pyrefly: ignore[bad-assignment]
       except StopIteration:
         self._stop_iteration = True
         raise
@@ -133,6 +133,6 @@ def process_files_with_handlers(
     if handler_index == len(file_handlers):
       handler_index = 0
     if handler_index == handler_start_index:
-      raise data_accessor_errors.DataAccessorError(
+      raise data_accessor_errors.DataAccessorError(  # pyrefly: ignore[bad-instantiation]
           'No file handler identified for input.'
       )

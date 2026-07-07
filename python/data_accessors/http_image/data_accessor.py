@@ -143,7 +143,7 @@ class HttpImageData(
     """
     if self._local_file_paths:
       return
-    self._local_file_paths = _download_http_images(
+    self._local_file_paths = _download_http_images(  # pyrefly: ignore[bad-assignment]
         stack, self.instance, self._config
     )
     stack.enter_context(self._reset_local_file_paths())

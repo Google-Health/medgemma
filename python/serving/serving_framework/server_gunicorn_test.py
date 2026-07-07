@@ -46,7 +46,7 @@ class ServerGunicornTest(absltest.TestCase):
 
     app = server_gunicorn.PredictionApplication(executor, health_check=None)
 
-    self.assertEqual(app.cfg.workers, 1)
+    self.assertEqual(app.cfg.workers, 1)  # pyrefly: ignore[missing-attribute]
 
   def test_application_option_setting(self):
     options = {
@@ -61,7 +61,7 @@ class ServerGunicornTest(absltest.TestCase):
         executor, options=options, health_check=None
     )
 
-    self.assertEqual(app.cfg.workers, 3)
+    self.assertEqual(app.cfg.workers, 3)  # pyrefly: ignore[missing-attribute]
 
   def test_health_route_no_check(self):
 

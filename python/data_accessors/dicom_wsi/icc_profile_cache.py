@@ -118,7 +118,7 @@ def _redis_set(
     if 'command not allowed under OOM prevention' not in str(exp):
       return
     try:
-      lazyfree_pending_objects = redis_client.info('memory').get(
+      lazyfree_pending_objects = redis_client.info('memory').get(  # pyrefly: ignore[missing-attribute]
           'lazyfree_pending_objects', 0
       )
       if lazyfree_pending_objects > 0:
@@ -328,7 +328,7 @@ def _get_dicom_slide_icc_profile(
   if isinstance(slide, dicom_slide.DicomSlide):
     return slide.get_icc_profile_bytes()
   if isinstance(slide, dicom_slide.DicomMicroscopeImage):
-    return slide.get_level_icc_profile_bytes(level)
+    return slide.get_level_icc_profile_bytes(level)  # pyrefly: ignore[bad-argument-type]
   raise ValueError('Unexpected object')
 
 
@@ -421,13 +421,13 @@ def get_dicom_icc_profile(
       ) as _:
         icc_profile_hash = None
   if icc_profile_hash is not None:  # if hash entry is found
-    struct_log[_ICC_PROFILE_HASH_KEY] = icc_profile_hash
+    struct_log[_ICC_PROFILE_HASH_KEY] = icc_profile_hash  # pyrefly: ignore[unsupported-operation]
     cloud_logging_client.debug(
         'Found cached DICOM path icc profile hash.', struct_log
     )
     if icc_profile_hash == _NO_ICC_PROFILE_BYTES:
       elapsed_time = time.time() - start_time
-      struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time
+      struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time  # pyrefly: ignore[unsupported-operation]
       cloud_logging_client.info(
           f'Slide has no ICC profile bytes (local cache); {elapsed_time} sec.',
           struct_log,
@@ -440,9 +440,9 @@ def get_dicom_icc_profile(
       )
       icc_profile = _local_icc_profile_bytes_cache.get(icc_profile_hash)
       if not settings.testing and icc_profile is not None:
-        struct_log[_ICC_PROFILE_SIZE_KEY] = len(icc_profile)
+        struct_log[_ICC_PROFILE_SIZE_KEY] = len(icc_profile)  # pyrefly: ignore[unsupported-operation]
         elapsed_time = time.time() - start_time
-        struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time
+        struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time  # pyrefly: ignore[unsupported-operation]
         cloud_logging_client.info(
             f'Returning ICC profile bytes (local cache); {elapsed_time} sec.',
             struct_log,
@@ -459,10 +459,10 @@ def get_dicom_icc_profile(
       with _local_icc_profile_bytes_cache_lock:
         _local_icc_profile_bytes_cache[icc_profile_hash] = icc_profile_bytes
       struct_log[_ICC_PROFILE_SIZE_KEY] = (
-          len(icc_profile) if icc_profile is not None else 'NONE'
+          len(icc_profile) if icc_profile is not None else 'NONE'  # pyrefly: ignore[unsupported-operation]
       )
       elapsed_time = time.time() - start_time
-      struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time
+      struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time  # pyrefly: ignore[unsupported-operation]
       cloud_logging_client.info(
           f'Returning cached slide ICC profile; {elapsed_time} sec.', struct_log
       )
@@ -470,7 +470,7 @@ def get_dicom_icc_profile(
   # Could not find ICC Profile in cache. Fetch from DICOM store and update
   # cache.
   icc_profile = _get_dicom_slide_icc_profile(slide, slide_level)
-  struct_log[_ICC_PROFILE_SIZE_KEY] = len(icc_profile)
+  struct_log[_ICC_PROFILE_SIZE_KEY] = len(icc_profile)  # pyrefly: ignore[unsupported-operation]
   cloud_logging_client.debug(
       'Retrieved ICC profile from DICOM store.', struct_log
   )
@@ -481,7 +481,7 @@ def get_dicom_icc_profile(
   )
   _run_cache_update_thread(th)
   elapsed_time = time.time() - start_time
-  struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time
+  struct_log[_ICC_PROFILE_RETRIEVAL_TIME_KEY] = elapsed_time  # pyrefly: ignore[unsupported-operation]
   cloud_logging_client.info(
       f'Returning ICC profile loaded from the DICOM store; {elapsed_time} sec.',
       struct_log,

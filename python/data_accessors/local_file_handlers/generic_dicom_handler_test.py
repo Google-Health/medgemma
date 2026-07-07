@@ -71,7 +71,7 @@ def _mock_ct_dicom(
       dcm.WindowCenter = window_center
       dcm.WindowWidth = window_width
     dcm.Modality = 'CT'
-    dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+    dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
     dcm.SOPClassUID = '1.2.840.10008.5.1.4.1.1.2.1'
     dcm.Rows = 3
     dcm.Columns = 3
@@ -472,7 +472,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
   def test_validate_transfer_syntax(self):
     dcm_path = os.path.join(self.create_tempdir(), 'test.dcm')
     with pydicom.dcmread(_encapsulated_dicom_path()) as dcm:
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.4.100'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.4.100'  # pyrefly: ignore[bad-assignment]
       dcm.save_as(dcm_path)
     with self.assertRaisesRegex(
         data_accessor_errors.DicomError,
@@ -652,7 +652,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
       with pydicom.dcmread(
           test_utils.testdata_path('ct', 'test_series', 'image0.dcm')
       ) as dcm:
-        dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+        dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
         dcm.PixelData = pixel_data
         dcm.save_as(dcm_data)
       dcm_data.seek(0)
@@ -691,7 +691,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
     ) as dcm:
       del dcm['Modality']
       dcm.SOPClassUID = sop_class_uid
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'CT')
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'CT')  # pyrefly: ignore[bad-argument-type]
 
   @parameterized.parameters(list(dicom_source_utils._MR_SOP_CLASS_UIDS))
   def test_get_mr_modality_from_sop_class_uid(self, sop_class_uid):
@@ -700,7 +700,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
     ) as dcm:
       del dcm['Modality']
       dcm.SOPClassUID = sop_class_uid
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'MR')
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'MR')  # pyrefly: ignore[bad-argument-type]
 
   @parameterized.parameters(list(dicom_source_utils._SM_SOP_CLASS_UIDS))
   def test_get_sm_modality_from_sop_class_uid(self, sop_class_uid):
@@ -709,7 +709,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
     ) as dcm:
       del dcm['Modality']
       dcm.SOPClassUID = sop_class_uid
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'SM')
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'SM')  # pyrefly: ignore[bad-argument-type]
 
   @parameterized.parameters(list(dicom_source_utils._DX_SOP_CLASS_UIDS))
   def test_get_dx_modality_from_sop_class_uid(self, sop_class_uid):
@@ -718,7 +718,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
     ) as dcm:
       del dcm['Modality']
       dcm.SOPClassUID = sop_class_uid
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'DX')
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'DX')  # pyrefly: ignore[bad-argument-type]
 
   def test_get_cr_modality_from_sop_class_uid(self):
     with pydicom.dcmread(
@@ -726,7 +726,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
     ) as dcm:
       del dcm['Modality']
       dcm.SOPClassUID = '1.2.840.10008.5.1.4.1.1.1'
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'CR')
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), 'CR')  # pyrefly: ignore[bad-argument-type]
 
   @parameterized.parameters(['CR', 'CT', 'MR', 'SM', 'DX'])
   def test_get_modality_from_modality_tag(self, modality):
@@ -734,7 +734,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
         test_utils.testdata_path('ct', 'test_series', 'image0.dcm')
     ) as dcm:
       dcm.Modality = modality
-      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), modality)
+      self.assertEqual(generic_dicom_handler._get_dicom_modality(dcm), modality)  # pyrefly: ignore[bad-argument-type]
 
   def test_get_unknown_modality_raises(self):
     with pydicom.dcmread(
@@ -746,7 +746,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
           data_accessor_errors.DicomError,
           '.*DICOM missing a modality tag metadata with a defined value.*',
       ):
-        generic_dicom_handler._get_dicom_modality(dcm)
+        generic_dicom_handler._get_dicom_modality(dcm)  # pyrefly: ignore[bad-argument-type]
 
   def test_decode_invalid_dicom_file_raises(self):
     with io.BytesIO(b'1342') as dcm_data:
@@ -938,7 +938,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
       with pydicom.dcmread(
           test_utils.testdata_path('ct', 'test_series', 'image0.dcm')
       ) as dcm:
-        self.assertFalse(generic_dicom_handler._same_acquisition(test_dcm, dcm))
+        self.assertFalse(generic_dicom_handler._same_acquisition(test_dcm, dcm))  # pyrefly: ignore[bad-argument-type]
 
   def test_same_acquisition(self):
     with pydicom.dcmread(
@@ -947,7 +947,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
       with pydicom.dcmread(
           test_utils.testdata_path('ct', 'test_series', 'image0.dcm')
       ) as dcm:
-        self.assertTrue(generic_dicom_handler._same_acquisition(test_dcm, dcm))
+        self.assertTrue(generic_dicom_handler._same_acquisition(test_dcm, dcm))  # pyrefly: ignore[bad-argument-type]
 
   def test_process_buffered_mri_volume_empty_input(self):
     self.assertEmpty(
@@ -1190,7 +1190,7 @@ class GenericDicomHandlerTest(parameterized.TestCase):
       dcm.RescaleSlope = 66
       dcm.RescaleIntercept = -33000
       img = np.arange(1002, dtype=np.uint16)
-      rescaled_img = generic_dicom_handler.rescale_ct_imaging(img, dcm)
+      rescaled_img = generic_dicom_handler.rescale_ct_imaging(img, dcm)  # pyrefly: ignore[bad-argument-type]
       self.assertEqual(rescaled_img.dtype, np.int32)
       self.assertEqual(np.min(rescaled_img), -33000)
       self.assertEqual(np.max(rescaled_img), 33066)

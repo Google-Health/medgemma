@@ -54,10 +54,10 @@ def _mock_dicom_instance() -> pydicom.FileDataset:
   sop_instance_uid = '1.2.3.4.5'
   frame_data = b'1234'
   file_meta = pydicom.dataset.FileMetaDataset()
-  file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
-  file_meta.MediaStorageSOPClassUID = sop_class_uid
-  file_meta.MediaStorageSOPInstanceUID = sop_instance_uid
-  file_meta.ImplementationClassUID = '1.2.4'
+  file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
+  file_meta.MediaStorageSOPClassUID = sop_class_uid  # pyrefly: ignore[bad-assignment]
+  file_meta.MediaStorageSOPInstanceUID = sop_instance_uid  # pyrefly: ignore[bad-assignment]
+  file_meta.ImplementationClassUID = '1.2.4'  # pyrefly: ignore[bad-assignment]
   mk_instance = pydicom.FileDataset(
       '', {}, file_meta=file_meta, preamble=b'\0' * 128
   )
@@ -78,7 +78,7 @@ def _mock_dicom_instance() -> pydicom.FileDataset:
   mk_instance.ImagedVolumeWidth = 1
   mk_instance.ImagedVolumeHeight = 1.0 / len(frame_data)
   mk_instance.HighBit = 7
-  mk_instance.PixelData = [frame_data]
+  mk_instance.PixelData = [frame_data]  # pyrefly: ignore[bad-assignment]
   if _PYDICOM_MAJOR_VERSION <= 2:
     mk_instance.is_implicit_VR = False
     mk_instance.is_little_endian = True
@@ -285,9 +285,9 @@ class PeteIccProfileCacheTest(parameterized.TestCase):
     )
 
   def test_init_fork_module_state(self):
-    icc_profile_cache._local_icc_profile_bytes_cache = None
-    icc_profile_cache._local_icc_profile_bytes_index_cache = None
-    icc_profile_cache._local_icc_profile_bytes_cache_lock = None
+    icc_profile_cache._local_icc_profile_bytes_cache = None  # pyrefly: ignore[bad-assignment]
+    icc_profile_cache._local_icc_profile_bytes_index_cache = None  # pyrefly: ignore[bad-assignment]
+    icc_profile_cache._local_icc_profile_bytes_cache_lock = None  # pyrefly: ignore[bad-assignment]
     icc_profile_cache._init_fork_module_state()
     self.assertIsNotNone(icc_profile_cache._local_icc_profile_bytes_cache)
     self.assertIsNotNone(icc_profile_cache._local_icc_profile_bytes_index_cache)
@@ -581,7 +581,7 @@ class PeteIccProfileCacheTest(parameterized.TestCase):
     with _MocGcpEnv(icc_profile_bytes) as mk:
       dcm_image = _mock_dicom_instance()
       dcm_image.file_meta.MediaStorageSOPClassUID = (
-          '1.2.840.10008.5.1.4.1.1.77.1.3'
+          '1.2.840.10008.5.1.4.1.1.77.1.3'  # pyrefly: ignore[bad-assignment]
       )
       dcm_image.SOPClassUID = '1.2.840.10008.5.1.4.1.1.77.1.3'
       dcm_image.SeriesInstanceUID = '4.5.6'

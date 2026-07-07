@@ -63,7 +63,7 @@ def _generate_instance_metadata_error_string(
 def _parse_url(image_url_dict: Union[Mapping[str, Any], str]) -> str:
   """Parses URL from image_url dict."""
   if isinstance(image_url_dict, Mapping):
-    image_url_dict = image_url_dict.get(_InstanceJsonKeys.URL)
+    image_url_dict = image_url_dict.get(_InstanceJsonKeys.URL)  # pyrefly: ignore[bad-assignment]
     if image_url_dict is None:
       raise data_accessor_errors.InvalidRequestFieldError(
           'Missing URL in image_url dict.'

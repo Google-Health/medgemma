@@ -51,7 +51,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         source_type = (
             dicom_source_utils.get_dicom_source_type_and_instance_metadata(
                 credential_factory.NoAuthCredentialsFactory(),
@@ -113,7 +113,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         with pydicom.dcmread(dcm_file) as dcm:
           dcm.StudyInstanceUID = '1.1'
           dcm.SeriesInstanceUID = '1.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       with self.assertRaises(data_accessor_errors.InvalidRequestFieldError):
         dicom_source_utils.get_dicom_source_type_and_instance_metadata(
             credential_factory.NoAuthCredentialsFactory(),
@@ -138,7 +138,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
           dcm.SeriesInstanceUID = '1.2'
           del dcm['Modality']
           dcm.SOPClassUID = '1.2.840.10008.5.1.4.1.1.6.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       with self.assertRaises(data_accessor_errors.InvalidRequestFieldError):
         dicom_source_utils.get_dicom_source_type_and_instance_metadata(
             credential_factory.NoAuthCredentialsFactory(),
@@ -159,7 +159,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
       ) as dcm:
         dcm.StudyInstanceUID = '1.1'
         dcm.SeriesInstanceUID = '1.2'
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       with pydicom.dcmread(
           test_utils.testdata_path(
               'wsi', 'multiframe_camelyon_challenge_image.dcm'
@@ -169,7 +169,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.SeriesInstanceUID = '1.2'
         dcm.SOPInstanceUID = '1.2.3'
         dcm.SOPClassUID = '1.2.840.10008.5.1.4.1.1.77.1.3'
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       with self.assertRaises(data_accessor_errors.InvalidRequestFieldError):
         dicom_source_utils.get_dicom_source_type_and_instance_metadata(
             credential_factory.NoAuthCredentialsFactory(),
@@ -190,7 +190,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
       ) as dcm:
         dcm.StudyInstanceUID = '1.1'
         dcm.SeriesInstanceUID = '1.2'
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dcm_path.append(
             f'{_MOCK_DICOM_STORE_PATH}/studies/1.1/series/1.2/instances/{dcm.SOPInstanceUID}'
         )
@@ -207,7 +207,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm_path.append(
             f'{_MOCK_DICOM_STORE_PATH}/studies/1.1/series/1.2/instances/{dcm.SOPInstanceUID}'
         )
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       with self.assertRaises(data_accessor_errors.InvalidRequestFieldError):
         dicom_source_utils.get_dicom_source_type_and_instance_metadata(
             credential_factory.NoAuthCredentialsFactory(),
@@ -229,7 +229,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.StudyInstanceUID = '1.1'
         dcm.SeriesInstanceUID = '1.2'
         expected_sop_instance_uid = dcm.SOPInstanceUID
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dcm_path.append(
             f'{_MOCK_DICOM_STORE_PATH}/studies/1.1/series/1.2/instances/{expected_sop_instance_uid}'
         )
@@ -241,7 +241,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.StudyInstanceUID = '1.1'
         dcm.SeriesInstanceUID = '1.2'
         dcm.SOPInstanceUID = '1.2.3'
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = (
           dicom_source_utils.get_dicom_source_type_and_instance_metadata(
               credential_factory.NoAuthCredentialsFactory(),
@@ -275,7 +275,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.SeriesInstanceUID = '1.2'
         dcm.ConcatenationUID = '1.2.3.4'
         expected_sop_instance_uid.add(dcm.SOPInstanceUID)
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dcm_path.append(
             f'{_MOCK_DICOM_STORE_PATH}/studies/1.1/series/1.2/instances/{dcm.SOPInstanceUID}'
         )
@@ -289,7 +289,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.SOPInstanceUID = '1.2.3'
         dcm.ConcatenationUID = '1.2.3.4'
         expected_sop_instance_uid.add(dcm.SOPInstanceUID)
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = (
           dicom_source_utils.get_dicom_source_type_and_instance_metadata(
               credential_factory.NoAuthCredentialsFactory(),
@@ -321,7 +321,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         dcm.StudyInstanceUID = '1.1'
         dcm.SeriesInstanceUID = '1.2'
         dcm.Modality = 'US'
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dcm_path.append(
             f'{_MOCK_DICOM_STORE_PATH}/studies/1.1/series/1.2/instances/{dcm.SOPInstanceUID}'
         )
@@ -343,7 +343,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
         ) as dcm:
           dcm.StudyInstanceUID = '1.1'
           dcm.SeriesInstanceUID = '1.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -370,7 +370,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
             dcm.ImageType = ['PRIMARY'] if index < 4 else ['DERIVED']
           dcm.StudyInstanceUID = '1.1'
           dcm.SeriesInstanceUID = '1.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -397,7 +397,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
             dcm.ImageType = ['DERIVED']
           dcm.StudyInstanceUID = '1.1'
           dcm.SeriesInstanceUID = '1.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -424,7 +424,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
             dcm.ImageType = ['DERIVED']
           dcm.StudyInstanceUID = '1.1'
           dcm.SeriesInstanceUID = '1.2'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -454,7 +454,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
             dcm.ImagePositionPatient = [index, 2, 2]
           else:
             del dcm['ImagePositionPatient']
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -486,7 +486,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
             dcm.AcquisitionNumber = 1
           else:
             dcm.AcquisitionNumber = 2
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -514,7 +514,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
           dcm.InstanceNumber = 1
           dcm.SOPInstanceUID = str(index)
           dcm.AcquisitionDateTime = f'20240130{index:0>2}000000'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {
@@ -546,7 +546,7 @@ class DicomSourceUtilsTest(parameterized.TestCase):
           dcm.SOPInstanceUID = str(index)
           dcm.AcquisitionDate = f'202401{index:0>2}'
           dcm.AcquisitionTime = f'{index:0>2}'
-          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       source_type = dicom_source_utils.get_dicom_source_type_and_instance_metadata(
           credential_factory.NoAuthCredentialsFactory(),
           {

@@ -68,7 +68,7 @@ def parse_dicom_source(
           'Invalid DICOM path.'
       ) from exp
     try:
-      dicom_web_path = dicom_path.FromString(instance_path)
+      dicom_web_path = dicom_path.FromString(instance_path)  # pyrefly: ignore[bad-argument-type]
     except ValueError as exp:
       raise data_accessor_errors.InvalidRequestFieldError(
           f'Invalid DICOMWEB uri "{instance_path}".'

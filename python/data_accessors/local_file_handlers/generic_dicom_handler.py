@@ -643,10 +643,10 @@ def _decode_dicom_images(
               'Concatenated DICOM are not supported.'
           )
         for img in decode_dicom_image(
-            dcm,
+            dcm,  # pyrefly: ignore[bad-argument-type]
             target_icc_profile,
         ):
-          yield dcm, img
+          yield dcm, img  # pyrefly: ignore[invalid-yield]
         # mark file as being processed so custom iterator will now return next
         # file in sequence.
         file_paths.processed_file()
@@ -803,13 +803,13 @@ def _modality_norm(
     dicom_images: Iterator[tuple[pydicom.FileDataset, np.ndarray]],
 ) -> Iterator[abstract_data_accessor.DataAcquisition[np.ndarray]]:
   """Post process DICOM images and yields blocks image from same acquisition."""
-  dicom_images = _DicomImageQueue(dicom_images)
-  while dicom_images.has_images():
-    dcm, _ = dicom_images.peek_image()
+  dicom_images = _DicomImageQueue(dicom_images)  # pyrefly: ignore[bad-assignment]
+  while dicom_images.has_images():  # pyrefly: ignore[missing-attribute]
+    dcm, _ = dicom_images.peek_image()  # pyrefly: ignore[missing-attribute]
     modality = _get_dicom_modality(dcm)
     dicom_source_utils.validate_modality_supported(modality)
     if modality == _MODALITY.MR:
-      yield _process_mri_modality_images(dicom_images)
+      yield _process_mri_modality_images(dicom_images)  # pyrefly: ignore[bad-argument-type]
     else:
       match modality:
         case _MODALITY.CT:
@@ -837,7 +837,7 @@ def _modality_norm(
       yield abstract_data_accessor.DataAcquisition(
           image_source,
           _process_non_mri_modality_images(
-              modality_default_image_transform, dicom_images
+              modality_default_image_transform, dicom_images  # pyrefly: ignore[bad-argument-type]
           ),
       )
 

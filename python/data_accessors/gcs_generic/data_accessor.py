@@ -272,7 +272,7 @@ class GcsGenericData(
     """
     if self._local_file_paths:
       return
-    self._local_file_paths = _download_gcs_data(
+    self._local_file_paths = _download_gcs_data(  # pyrefly: ignore[bad-assignment]
         stack,
         self.instance,
         self._download_timeout,

@@ -399,7 +399,7 @@ class WsiDicomHandler(abstract_handler.AbstractHandler):
           yield abstract_data_accessor.DataAcquisition(
               abstract_data_accessor.AccessorDataSource.DICOM_WSI_MICROSCOPY_PYRAMID_LEVEL,
               _decode_dicom_image(
-                  dcm,
+                  dcm,  # pyrefly: ignore[bad-argument-type]
                   target_icc_profile,
                   instance_patch_coordinates,
                   resize_image_dimensions,

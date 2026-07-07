@@ -77,13 +77,13 @@ class DataAccessorTest(parameterized.TestCase):
         test_utils.testdata_path('cxr', 'encapsulated_cxr.dcm')
     ) as dcm:
       json_instance = {
-          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),
+          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),  # pyrefly: ignore[bad-argument-type]
           _InstanceJsonKeys.PATCH_COORDINATES: [],
       }
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_generic_dicom_image(
             credential_factory_module.NoAuthCredentialsFactory(),
             json_instance,
@@ -116,13 +116,13 @@ class DataAccessorTest(parameterized.TestCase):
         test_utils.testdata_path('cxr', 'encapsulated_cxr.dcm')
     ) as dcm:
       json_instance = {
-          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),
+          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),  # pyrefly: ignore[bad-argument-type]
           _InstanceJsonKeys.PATCH_COORDINATES: patch_coordinates,
       }
       img = _test_load_generic_dicom(
           credential_factory_module.NoAuthCredentialsFactory(),
           json_instance,
-          dcm,
+          dcm,  # pyrefly: ignore[bad-argument-type]
       )
       self.assertLen(img, 1)
       self.assertEqual(img[0].shape, expected_shape)
@@ -132,7 +132,7 @@ class DataAccessorTest(parameterized.TestCase):
         test_utils.testdata_path('cxr', 'encapsulated_cxr.dcm')
     ) as dcm:
       json_instance = {
-          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),
+          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),  # pyrefly: ignore[bad-argument-type]
           _InstanceJsonKeys.PATCH_COORDINATES: [
               {'x_origin': 0, 'y_origin': 0, 'width': 5000, 'height': 10}
           ],
@@ -143,7 +143,7 @@ class DataAccessorTest(parameterized.TestCase):
         _test_load_generic_dicom(
             credential_factory_module.NoAuthCredentialsFactory(),
             json_instance,
-            dcm,
+            dcm,  # pyrefly: ignore[bad-argument-type]
         )
 
   def test_is_accessor_data_embedded_in_request(self):
@@ -151,7 +151,7 @@ class DataAccessorTest(parameterized.TestCase):
         test_utils.testdata_path('cxr', 'encapsulated_cxr.dcm')
     ) as dcm:
       json_instance = {
-          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),
+          _InstanceJsonKeys.DICOM_WEB_URI: _create_dicom_web_uri(dcm),  # pyrefly: ignore[bad-argument-type]
           _InstanceJsonKeys.PATCH_COORDINATES: [],
       }
       instance = data_accessor_definition.json_to_generic_dicom_image(
@@ -201,8 +201,8 @@ class DataAccessorTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
-        instance_path = _create_dicom_web_uri(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
+        instance_path = _create_dicom_web_uri(dcm)  # pyrefly: ignore[bad-argument-type]
         json_instance = {
             _InstanceJsonKeys.DICOM_WEB_URI: instance_path,
         }
@@ -230,8 +230,8 @@ class DataAccessorTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
-        instance_path = _create_dicom_web_uri(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
+        instance_path = _create_dicom_web_uri(dcm)  # pyrefly: ignore[bad-argument-type]
         json_instance = {
             _InstanceJsonKeys.DICOM_SOURCE: [instance_path, instance_path],
         }
@@ -269,12 +269,12 @@ class DataAccessorTest(parameterized.TestCase):
     with pydicom.dcmread(
         test_utils.testdata_path('cxr', 'encapsulated_cxr.dcm')
     ) as dcm:
-      instance_path = _create_dicom_web_uri(dcm)
+      instance_path = _create_dicom_web_uri(dcm)  # pyrefly: ignore[bad-argument-type]
 
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory_module.NoAuthCredentialsFactory()
         )
@@ -301,16 +301,16 @@ class DataAccessorTest(parameterized.TestCase):
     ) as dcm1:
       dcm2 = copy.deepcopy(dcm1)
       dcm2.SOPInstanceUID = '1.2.3'
-      dcm2.file_meta.MediaStorageSOPInstanceUID = '1.2.3'
+      dcm2.file_meta.MediaStorageSOPInstanceUID = '1.2.3'  # pyrefly: ignore[bad-assignment]
 
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm1)
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm2)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm1)  # pyrefly: ignore[bad-argument-type]
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm2)  # pyrefly: ignore[bad-argument-type]
 
-        instance_path1 = _create_dicom_web_uri(dcm1)
-        instance_path2 = _create_dicom_web_uri(dcm2)
+        instance_path1 = _create_dicom_web_uri(dcm1)  # pyrefly: ignore[bad-argument-type]
+        instance_path2 = _create_dicom_web_uri(dcm2)  # pyrefly: ignore[bad-argument-type]
 
         json_instance = {
             _InstanceJsonKeys.DICOM_SOURCE: [instance_path1, instance_path2],

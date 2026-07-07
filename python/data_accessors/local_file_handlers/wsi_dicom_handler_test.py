@@ -96,7 +96,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -172,7 +172,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -327,7 +327,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
     dcm_path = os.path.join(self.create_tempdir(), 'test.dcm')
 
     with pydicom.dcmread(_wsi_dicom_file_path()) as dcm:
-      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)
+      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)  # pyrefly: ignore[bad-argument-type]
       decoded_frames = []
       for frame in frames:
         result = dicom_frame_decoder.decode_dicom_compressed_frame_bytes(
@@ -339,7 +339,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
         pixel_data = b'{pixeldata}\x00'
       dcm.PixelData = pixel_data
       dcm.PhotometricInterpretation = 'RGB'
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
       dcm.save_as(dcm_path)
 
     dicom_handler = wsi_dicom_handler.WsiDicomHandler()
@@ -359,7 +359,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
     dcm_path = os.path.join(self.create_tempdir(), 'test.dcm')
 
     with pydicom.dcmread(_wsi_dicom_file_path()) as dcm:
-      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)
+      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)  # pyrefly: ignore[bad-argument-type]
       decoded_frames = []
       for frame in frames:
         result = dicom_frame_decoder.decode_dicom_compressed_frame_bytes(
@@ -372,7 +372,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       dcm.PixelData = pixel_data
       dcm.SamplesPerPixel = 1
       dcm.PhotometricInterpretation = 'MONOCHROME2'
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
       dcm.save_as(dcm_path)
 
     dicom_handler = wsi_dicom_handler.WsiDicomHandler()
@@ -392,7 +392,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
     dcm_path = os.path.join(self.create_tempdir(), 'test.dcm')
 
     with pydicom.dcmread(_wsi_dicom_file_path()) as dcm:
-      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)
+      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)  # pyrefly: ignore[bad-argument-type]
       decoded_frames = []
       for frame in frames:
         result = dicom_frame_decoder.decode_dicom_compressed_frame_bytes(
@@ -405,7 +405,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       dcm.PixelData = pixel_data
       dcm.SamplesPerPixel = 1
       dcm.PhotometricInterpretation = 'MONOCHROME1'
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
       dcm.save_as(dcm_path)
 
       dicom_handler = wsi_dicom_handler.WsiDicomHandler()
@@ -463,7 +463,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -559,7 +559,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -655,7 +655,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -714,7 +714,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(
           _MOCK_DICOM_STORE_PATH
       ) as dicom_store:
-        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_DICOM_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         dwi = dicom_web_interface.DicomWebInterface(
             credential_factory.NoAuthCredentialsFactory()
         )
@@ -736,7 +736,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
     dcm_path = os.path.join(self.create_tempdir(), 'test.dcm')
 
     with pydicom.dcmread(_wsi_dicom_file_path()) as dcm:
-      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)
+      frames = wsi_dicom_handler._get_compressed_dicom_frame_bytes(dcm)  # pyrefly: ignore[bad-argument-type]
       decoded_frames = []
       for frame in frames:
         result = dicom_frame_decoder.decode_dicom_compressed_frame_bytes(
@@ -747,7 +747,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
       if len(pixel_data) % 2 != 0:
         pixel_data = b'{pixeldata}\x00'
       dcm.PixelData = pixel_data
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
       dcm.save_as(dcm_path)
     dicom_handler = wsi_dicom_handler.WsiDicomHandler()
     with self.assertRaisesRegex(
@@ -799,7 +799,7 @@ class WsiDicomHandlerTest(parameterized.TestCase):
 
     with pydicom.dcmread(_wsi_dicom_file_path()) as dcm:
       del dcm['PixelData']
-      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
+      dcm.file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
       dcm.PhotometricInterpretation = 'RGB'
       dcm.SamplesPerPixel = 3
       dcm.save_as(dcm_path)

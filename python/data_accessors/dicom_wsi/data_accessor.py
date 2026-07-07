@@ -292,7 +292,7 @@ def _load_slide_level(
     )
     if target_icc_profile is None:
       _pre_load_slide_patches(
-          ds, level, patches, True, load_whole_slide_frame_ratio
+          ds, level, patches, True, load_whole_slide_frame_ratio  # pyrefly: ignore[bad-argument-type]
       )
       icc_profile_transformation = None
     else:
@@ -300,7 +300,7 @@ def _load_slide_level(
           local_dicom_slide_cache_types.CacheConfigOptimizationHint.MINIMIZE_LATENCY
       )
       _pre_load_slide_patches(
-          ds, level, patches, False, load_whole_slide_frame_ratio
+          ds, level, patches, False, load_whole_slide_frame_ratio  # pyrefly: ignore[bad-argument-type]
       )
       try:
         dicom_slide_icc_profile = icc_profile_cache.get_dicom_icc_profile(
@@ -670,7 +670,7 @@ class DicomDigitalPathologyData(
     """Method pre-loads data prior to data_iterator."""
     if self._local_data:
       return
-    self._local_data = _load_slide_data(self.instance, self._settings)
+    self._local_data = _load_slide_data(self.instance, self._settings)  # pyrefly: ignore[bad-assignment]
     stack.enter_context(self._reset_local_file_path())
 
   def data_acquisition_iterator(

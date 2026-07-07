@@ -207,7 +207,7 @@ def _remove_instances_with_duplicate_instance_numbers(
 def _sort_by_slice_position(obj: dicom_web_interface.DicomObject) -> int:
   img_pos_pat_zcoord_index = 0
   try:
-    return obj.get_list_value(tags.IMAGE_POSITION_PATIENT)[
+    return obj.get_list_value(tags.IMAGE_POSITION_PATIENT)[  # pyrefly: ignore[unsupported-operation]
         img_pos_pat_zcoord_index
     ]
   except (IndexError, TypeError):

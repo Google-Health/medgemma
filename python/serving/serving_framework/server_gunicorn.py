@@ -290,10 +290,10 @@ class PredictionApplication(gunicorn_base.BaseApplication):
     config = {
         key: value
         for key, value in self.options.items()
-        if key in self.cfg.settings and value is not None
+        if key in self.cfg.settings and value is not None  # pyrefly: ignore[missing-attribute]
     }
     for key, value in config.items():
-      self.cfg.set(key.lower(), value)
+      self.cfg.set(key.lower(), value)  # pyrefly: ignore[missing-attribute]
 
   def load(self) -> flask.Flask:
     self._executor.start()

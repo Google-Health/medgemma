@@ -40,10 +40,10 @@ def create_test_dicom_instance(
 ) -> pydicom.FileDataset:
   """Creates pydicom instance for testing."""
   file_meta = pydicom.dataset.FileMetaDataset()
-  file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'
-  file_meta.MediaStorageSOPClassUID = sop_class_uid
-  file_meta.MediaStorageSOPInstanceUID = instance_uid
-  file_meta.ImplementationClassUID = '1.2.3'
+  file_meta.TransferSyntaxUID = '1.2.840.10008.1.2.1'  # pyrefly: ignore[bad-assignment]
+  file_meta.MediaStorageSOPClassUID = sop_class_uid  # pyrefly: ignore[bad-assignment]
+  file_meta.MediaStorageSOPInstanceUID = instance_uid  # pyrefly: ignore[bad-assignment]
+  file_meta.ImplementationClassUID = '1.2.3'  # pyrefly: ignore[bad-assignment]
   test_instance = pydicom.FileDataset(
       '', {}, file_meta=file_meta, preamble=b'\0' * 128
   )

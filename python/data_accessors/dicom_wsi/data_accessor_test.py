@@ -504,12 +504,12 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
             'wsi', 'multiframe_camelyon_challenge_image.dcm'
         )
     )
-    dcm2.file_meta.MediaStorageSOPInstanceUID = '1.42'
+    dcm2.file_meta.MediaStorageSOPInstanceUID = '1.42'  # pyrefly: ignore[bad-assignment]
     dcm2.ConcatenationFrameOffsetNumber = dcm.NumberOfFrames
     dcm2.SOPInstanceUID = '1.42'
     dcm2.InConcatenationNumber = 2
     dcm2.ConcatenationUID = '1.43'
-    dcm2.file_meta.TransferSyntaxUID = '1.2.840.10008.1.​2.​1'
+    dcm2.file_meta.TransferSyntaxUID = '1.2.840.10008.1.​2.​1'  # pyrefly: ignore[bad-assignment]
     path = _dicom_instance_path(dcm)
     coordinates = [
         patch_coordinate.create_patch_coordinate(
@@ -1035,7 +1035,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       path = _dicom_instance_path(dcm)
       store_path = str(path.GetStorePath())
       with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             credential_factory.NoAuthCredentialsFactory(),
             {
@@ -1090,7 +1090,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         with pydicom.dcmread(dcm_path) as dcm:
           dcm.StudyInstanceUID = study_uid
           dcm.SeriesInstanceUID = series_uid
-          mk_dicom_stores[store_path].add_instance(dcm)
+          mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       instance = data_accessor_definition.json_to_dicom_wsi_image(
           cf,
           {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1124,7 +1124,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       for index in range(expected):
         with pydicom.dcmread(dcm_path) as dcm:
           dcm.SOPInstanceUID = f'1.3.4.5{index}'
-          mk_dicom_stores[store_path].add_instance(dcm)
+          mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       instance = data_accessor_definition.json_to_dicom_wsi_image(
           cf,
           {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1160,7 +1160,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       for index in range(expected):
         with pydicom.dcmread(dcm_path) as dcm:
           dcm.SOPInstanceUID = f'1.3.4.5{index}'
-          mk_dicom_stores[store_path].add_instance(dcm)
+          mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       instance = data_accessor_definition.json_to_dicom_wsi_image(
           cf,
           {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1181,7 +1181,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       path = _dicom_instance_path(dcm).GetSeriesPath()
       store_path = str(path.GetStorePath())
       with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             cf,
             {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1208,7 +1208,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
         dcm.NumberOfFrames = 1
         dcm.ImageType = ['THUMBNAIL']
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             cf,
             {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1238,7 +1238,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
         dcm.NumberOfFrames = 1
         dcm.ImageType = [image_type_str]
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             cf,
             {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1267,7 +1267,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         dcm.NumberOfFrames = 1
         dcm.ConcatenationFrameOffsetNumber = 2
         dcm.ImageType = ['THUMBNAIL']
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             cf,
             {_InstanceJsonKeys.DICOM_WEB_URI: str(path)},
@@ -1293,7 +1293,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       path = _dicom_instance_path(dcm).GetSeriesPath()
       store_path = str(path.GetStorePath())
       with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         instance = data_accessor_definition.json_to_dicom_wsi_image(
             cf,
             {
@@ -1333,7 +1333,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         dcm.InConcatenationTotalNumber = 2
         dcm.NumberOfFrames = dcm.NumberOfFrames // 2
         dcm.ConcatenationFrameOffsetNumber = 0
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         path_1 = _dicom_instance_path(dcm)
       with pydicom.dcmread(dcm_path) as dcm:
         dcm.SOPInstanceUID = '1.2.3.4.5'
@@ -1342,7 +1342,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         dcm.InConcatenationTotalNumber = 2
         dcm.ConcatenationFrameOffsetNumber = dcm.NumberOfFrames // 2
         dcm.NumberOfFrames = dcm.NumberOfFrames - (dcm.NumberOfFrames // 2)
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         path_2 = _dicom_instance_path(dcm)
       instance = data_accessor_definition.json_to_dicom_wsi_image(
           cf,
@@ -1379,7 +1379,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         dcm.InConcatenationTotalNumber = 2
         dcm.NumberOfFrames = dcm.NumberOfFrames // 2
         dcm.ConcatenationFrameOffsetNumber = 0
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         path_1 = _dicom_instance_path(dcm)
       with pydicom.dcmread(dcm_path) as dcm:
         dcm.SOPInstanceUID = '1.2.3.4.5'
@@ -1388,7 +1388,7 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
         dcm.InConcatenationTotalNumber = 2
         dcm.ConcatenationFrameOffsetNumber = dcm.NumberOfFrames // 2
         dcm.NumberOfFrames = dcm.NumberOfFrames - (dcm.NumberOfFrames // 2)
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
       instance = data_accessor_definition.json_to_dicom_wsi_image(
           cf,
           {
@@ -1420,11 +1420,11 @@ class DicomDigitalPathologyDataTest(parameterized.TestCase):
       store_path = str(instance_path.GetStorePath())
     with dicom_store_mock.MockDicomStores(store_path) as mk_dicom_stores:
       with pydicom.dcmread(dcm_path) as dcm:
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         path_1 = _dicom_instance_path(dcm)
       with pydicom.dcmread(dcm_path) as dcm:
         dcm.SOPInstanceUID = '1.2.3.4.5'
-        mk_dicom_stores[store_path].add_instance(dcm)
+        mk_dicom_stores[store_path].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         path_2 = _dicom_instance_path(dcm)
       settings = dataclasses.replace(
           _DEBUG_SETTINGS,

@@ -375,7 +375,7 @@ class OpenSlideHandler(abstract_handler.AbstractHandler):
               f.write(image_bytes)
           with openslide.OpenSlide(file_path) as slide:
             if slide.level_count < 1:
-              raise data_accessor_errors.DataAccessorError(
+              raise data_accessor_errors.DataAccessorError(  # pyrefly: ignore[bad-instantiation]
                   'Openslide image has no pyramid levels. Please provide a'
                   ' valid slide.'
               )

@@ -268,8 +268,8 @@ def _download_dicom_instances(
   ):
     # if only one instance or not operating in series then download in current
     # thread.
-    for instance in dicom_instances_to_download_individually:
-      _download_dicom_instance(dwi, series_path, instance)
+    for instance in dicom_instances_to_download_individually:  # pyrefly: ignore[bad-assignment]
+      _download_dicom_instance(dwi, series_path, instance)  # pyrefly: ignore[bad-argument-type]
   else:
     # if multiple instances and operating in parallel.
     with config.get_worker_executor() as executor:
@@ -358,7 +358,7 @@ class DicomGenericData(
     """
     if self._local_file_paths:
       return
-    self._local_file_paths = _download_dicom_instances(
+    self._local_file_paths = _download_dicom_instances(  # pyrefly: ignore[bad-assignment]
         stack, self.instance, self._config
     )
     stack.enter_context(self._reset_local_file_path())
