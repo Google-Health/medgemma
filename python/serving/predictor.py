@@ -191,7 +191,7 @@ def _parse_image_content(
               False,  # Require patch dim match default dim.
           )
       )
-      return inline_bytes_data_accessor.InlineBytesData(
+      return inline_bytes_data_accessor.InlineBytesData(  # pyrefly: ignore[bad-return]
           parsed_instance, _get_local_file_handlers()
       )
     # support HTTP data source.
@@ -211,7 +211,7 @@ def _parse_image_content(
           config.endpoint_input_height,
           False,  # Require patch dim match default dim.
       )
-      return http_image_data_accessor.HttpImageData(
+      return http_image_data_accessor.HttpImageData(  # pyrefly: ignore[bad-return]
           parsed_instance,
           _get_local_file_handlers(),
           config=abstract_data_accessor.DataAccessorConfig(
@@ -230,7 +230,7 @@ def _parse_image_content(
           config.endpoint_input_height,
           False,  # Require patch dim match default dim.
       )
-      return http_image_data_accessor.HttpImageData(
+      return http_image_data_accessor.HttpImageData(  # pyrefly: ignore[bad-return]
           parsed_instance,
           _get_local_file_handlers(),
           config=abstract_data_accessor.DataAccessorConfig(
@@ -256,7 +256,7 @@ def _parse_image_content(
               False,  # Require patch dim match default dim.
           )
       )
-      return gcs_generic_data_accessor.GcsGenericData(
+      return gcs_generic_data_accessor.GcsGenericData(  # pyrefly: ignore[bad-return]
           parsed_instance,
           _get_local_file_handlers(),
           _GCS_DOWNLOAD_THREAD_COUNT,
@@ -296,7 +296,7 @@ def _parse_image_content(
                 result.dicom_instances_metadata,
             )
         )
-        return dicom_wsi_data_accessor.DicomDigitalPathologyData(
+        return dicom_wsi_data_accessor.DicomDigitalPathologyData(  # pyrefly: ignore[bad-return]
             parsed_instance, config
         )
       parsed_instance = (
@@ -309,7 +309,7 @@ def _parse_image_content(
               result.dicom_instances_metadata,
           )
       )
-      return dicom_generic_data_accessor.DicomGenericData(
+      return dicom_generic_data_accessor.DicomGenericData(  # pyrefly: ignore[bad-return]
           parsed_instance,
           config=abstract_data_accessor.DataAccessorConfig(
               max_parallel_download_workers=config.max_parallel_download_workers,
@@ -399,8 +399,8 @@ def _encode_image_bytes(image_bytes: np.ndarray) -> bytes:
 
   # opencv assumes BGR ordering.
   image_bytes = cv2.cvtColor(image_bytes, cv2.COLOR_RGB2BGR)
-  image_bytes = _compress_image(image_bytes)
-  return _base64_encode_image_bytes(image_bytes)
+  image_bytes = _compress_image(image_bytes)  # pyrefly: ignore[bad-assignment]
+  return _base64_encode_image_bytes(image_bytes)  # pyrefly: ignore[bad-argument-type]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -444,7 +444,7 @@ def _parse_content(
     match input_type:
       case input_type if input_type in predictor_const.IMAGE_INPUT_TYPES:
         parsed_content.append(
-            _MedGemmaContent(input_type, _parse_image_content(config, content))
+            _MedGemmaContent(input_type, _parse_image_content(config, content))  # pyrefly: ignore[bad-argument-type]
         )
       case predictor_const.TEXT_INPUT_TYPE:
         pass  # no handling needed.
@@ -527,7 +527,7 @@ class _MedGemmaPredictionParameters:
     mapped_parameters = {
         name_map[k]: v for k, v in json_parameters.items() if k in name_map
     }
-    return cls(**(default_parameters | mapped_parameters))
+    return cls(**(default_parameters | mapped_parameters))  # pyrefly: ignore[bad-argument-type]
 
   def to_dict(self) -> Mapping[str, Any]:
     return {

@@ -59,13 +59,13 @@ def main(argv: Sequence[str]) -> None:
     raise ValueError(
         'The environment variable AIP_HTTP_PORT needs to be specified.'
     )
-  http_port = int(os.environ.get('AIP_HTTP_PORT'))
+  http_port = int(os.environ.get('AIP_HTTP_PORT'))  # pyrefly: ignore[bad-argument-type]
   options = {
       'bind': f'0.0.0.0:{http_port}',
       'workers': 3,
       'timeout': 120,
   }
-  model_rest_port = int(os.environ.get('MODEL_REST_PORT'))
+  model_rest_port = int(os.environ.get('MODEL_REST_PORT'))  # pyrefly: ignore[bad-argument-type]
   health_checker = server_health_check.TritonServerHealthCheck(model_rest_port)
 
   # Get schema validator.

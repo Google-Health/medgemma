@@ -93,9 +93,9 @@ def _read_test_jpeg() -> bytes:
 
 
 def _mock_base64_encoder(image_bytes: bytes) -> str:
-  image_bytes = np.frombuffer(image_bytes, dtype=np.uint8)
-  avg = round(np.mean(image_bytes), 2)
-  length = image_bytes.shape[0]
+  image_bytes = np.frombuffer(image_bytes, dtype=np.uint8)  # pyrefly: ignore[bad-assignment]
+  avg = round(np.mean(image_bytes), 2)  # pyrefly: ignore[no-matching-overload]
+  length = image_bytes.shape[0]  # pyrefly: ignore[missing-attribute]
   return f'average_byte_value: {avg}, byte_length: {length}'
 
 
@@ -940,7 +940,7 @@ class ImageEncoderTest(parameterized.TestCase):
         )
         with pydicom.dcmread(path) as dcm:
           dcm.Modality = mock_modality
-          dicom_store[_MOCK_STORE_PATH].add_instance(dcm)
+          dicom_store[_MOCK_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
           series_path = f'{_MOCK_STORE_PATH}/studies/{dcm.StudyInstanceUID}/series/{dcm.SeriesInstanceUID}'
       mock_prediction_input = {
           'messages': [{
@@ -1009,7 +1009,7 @@ class ImageEncoderTest(parameterized.TestCase):
           'wsi', 'multiframe_camelyon_challenge_image.dcm'
       )
       with pydicom.dcmread(path) as dcm:
-        dicom_store[_MOCK_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         series_path = f'{_MOCK_STORE_PATH}/studies/{dcm.StudyInstanceUID}/series/{dcm.SeriesInstanceUID}'
       mock_prediction_input = {
           'messages': [{
@@ -1074,7 +1074,7 @@ class ImageEncoderTest(parameterized.TestCase):
           'wsi', 'multiframe_camelyon_challenge_image.dcm'
       )
       with pydicom.dcmread(path) as dcm:
-        dicom_store[_MOCK_STORE_PATH].add_instance(dcm)
+        dicom_store[_MOCK_STORE_PATH].add_instance(dcm)  # pyrefly: ignore[bad-argument-type]
         series_path = f'{_MOCK_STORE_PATH}/studies/{dcm.StudyInstanceUID}/series/{dcm.SeriesInstanceUID}'
       mock_prediction_input = {
           'messages': [{
