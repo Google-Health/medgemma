@@ -56,7 +56,7 @@ FROM google/cloud-sdk:stable AS gcloud_builder
 
 # ----------------------------------------------------------------------------
 
-FROM nvcr.io/nvidia/tritonserver:26.05-vllm-python-py3
+FROM nvcr.io/nvidia/tritonserver:26.06-vllm-python-py3
 
 WORKDIR /
 

@@ -1,16 +1,12 @@
 # Requirements for fixing base image vulnerabilities in system site-packages.
-# These packages are pre-installed in the Triton base image with vulnerable
-# versions; upgrading them here patches the system Python environment.
+# These packages are pre-installed in the Triton 26.06 base image with
+# vulnerable versions; upgrading them here patches the system Python
+# environment.
 #
-# idna 3.18: fixes CVE-2026-45409 (idna 3.13 in base image)
-idna==3.18 \
-    --hash=sha256:ffb385a7e039654cef1ab9ef32c6fafe283c0c0467bba1d9029738ce4a14a848 \
-    --hash=sha256:7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2
-# aiohttp 3.14.1: fixes CVE-2026-54278, CVE-2026-54274, CVE-2026-54277
-# (aiohttp 3.14.0 in base image)
-aiohttp==3.14.1 \
-    --hash=sha256:3e6fc1a85fa7194a1a7d19f44e8609180f4a8eb5fa4c7ed8b4355f080fad235c \
-    --hash=sha256:307f2cff90a764d329e77040603fa032db89c5c24fdad50c4c15334cba744035
+# Packages removed after 26.05→26.06 base image bump (now ship fixed):
+#   idna 3.18 (was 3.13), aiohttp 3.14.1 (was 3.14.0),
+#   python-multipart 0.0.32 (was 0.0.27), pyjwt 2.13.0 (was 2.12.1)
+#
 # starlette 1.3.1: fixes CVE-2026-54283 (starlette 0.49.3 in base image)
 starlette==1.3.1 \
     --hash=sha256:c7372aae11c3c3f26a42df7bd626cec2f47d03483d261d369516a615a53714c6 \
@@ -19,12 +15,3 @@ starlette==1.3.1 \
 fastapi==0.138.1 \
     --hash=sha256:b994cae7ba8b82c976a728b544244de31333fa5f7d261f9a1dffe526444cae23 \
     --hash=sha256:96e3702dce09ee0dce48856135620d3d865ca684a79fe7513fd7b13a12f82862
-# python-multipart 0.0.32: fixes CVE-2026-53539 (python-multipart 0.0.27 in
-# base image)
-python-multipart==0.0.32 \
-    --hash=sha256:ff6d3f776f16878c894e52e107296ffc890e913c611b1a4ec6c44e2821fe2e23 \
-    --hash=sha256:be54b7f3fa167bb83e4fcd936b887b708f4e57fe75911c02aebf53efaf8d938e
-# pyjwt 2.13.0: fixes CVE-2026-48526 (pyjwt 2.12.1 in base image)
-pyjwt==2.13.0 \
-    --hash=sha256:66adcc2aff09b3f1bbd95fc1e1577df8ac8723c978552fd43304c8a290ac5728 \
-    --hash=sha256:41571c89ca91598c79e8ef18a2d07367d4810fbbd6f637794879baf1b7703423
