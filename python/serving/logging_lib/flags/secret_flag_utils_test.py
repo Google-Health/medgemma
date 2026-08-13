@@ -69,8 +69,8 @@ class SecretFlagUtilsTest(parameterized.TestCase):
     secret_flag_utils._ENABLE_ENV_SECRET_MANAGER = False
 
   def test_init_fork_module_state(self):
-    secret_flag_utils._cache = None
-    secret_flag_utils._cache_lock = None
+    secret_flag_utils._cache = None  # pyrefly: ignore[bad-assignment]
+    secret_flag_utils._cache_lock = None  # pyrefly: ignore[bad-assignment]
     secret_flag_utils._init_fork_module_state()
     self.assertIsNotNone(secret_flag_utils._cache)
     self.assertIsNotNone(secret_flag_utils._cache_lock)

@@ -62,7 +62,7 @@ class CloudLoggingTest(parameterized.TestCase):
     cloud_logging_client_instance.CloudLoggingClientInstance._cloud_logging_handler = (
         None
     )
-    cloud_logging_client_instance.CloudLoggingClientInstance._per_thread_log_signatures = (
+    cloud_logging_client_instance.CloudLoggingClientInstance._per_thread_log_signatures = (  # pyrefly: ignore[no-access]
         True
     )
     self.enter_context(flagsaver.flagsaver(ops_log_project='TEST_PROJECT'))
@@ -122,7 +122,7 @@ class CloudLoggingTest(parameterized.TestCase):
         'Unsupported logging severity level; Severity=',
     ):
       cloud_logging_client_instance._py_log(
-          logging.getLogger(), 'test', {'foo': 'bar'}, 99999
+          logging.getLogger(), 'test', {'foo': 'bar'}, 99999  # pyrefly: ignore[bad-argument-type]
       )  # pytype: disable=wrong-arg-types
 
   def test_get_source_location_to_log_with_stack_frames_back_beyond_stack(self):
@@ -362,7 +362,7 @@ class CloudLoggingTest(parameterized.TestCase):
         {'foo': 'bar', 'shoe': 'far'},
     ))
     self.assertEqual({'foo': 'bar', 'shoe': 'far'}, ret_dict)
-    self.assertEqual(['foo', 'shoe'], list(ret_dict))
+    self.assertEqual(['foo', 'shoe'], list(ret_dict))  # pyrefly: ignore[bad-argument-type]
 
   def test_merge_struct_merge_and_return_sorted_dict(self):
     """Test multiple dict structure merge."""
@@ -372,7 +372,7 @@ class CloudLoggingTest(parameterized.TestCase):
     self.assertEqual(
         {'foo': 'bar', 'shoe': 'far', 'google': 'brain', 'abc': 'efg'}, ret_dict
     )
-    self.assertEqual(['foo', 'shoe', 'abc', 'google'], list(ret_dict))
+    self.assertEqual(['foo', 'shoe', 'abc', 'google'], list(ret_dict))  # pyrefly: ignore[bad-argument-type]
 
   @flagsaver.flagsaver(pod_hostname='test_pod', pod_uid='123')
   def test_default_signature(self):
@@ -840,9 +840,9 @@ class CloudLoggingTest(parameterized.TestCase):
     mocked_method.assert_not_called()
 
   def test_cloud_logging_client_init_fork_module_state(self):
-    cloud_logging_client.CloudLoggingClient._singleton_instance = 'mock'
-    cloud_logging_client.CloudLoggingClient._startup_message_logged = 'mock'
-    cloud_logging_client.CloudLoggingClient._singleton_lock = None
+    cloud_logging_client.CloudLoggingClient._singleton_instance = 'mock'  # pyrefly: ignore[bad-assignment]
+    cloud_logging_client.CloudLoggingClient._startup_message_logged = 'mock'  # pyrefly: ignore[bad-assignment]
+    cloud_logging_client.CloudLoggingClient._singleton_lock = None  # pyrefly: ignore[bad-assignment]
 
     cloud_logging_client.CloudLoggingClient._init_fork_module_state()
 
@@ -861,13 +861,13 @@ class CloudLoggingTest(parameterized.TestCase):
 
   def test_cloud_logging_client_instance_init_fork_module_state(self):
     cloud_logging_client_instance.CloudLoggingClientInstance._global_lock = (
-        'mock'
+        'mock'  # pyrefly: ignore[bad-assignment]
     )
     cloud_logging_client_instance.CloudLoggingClientInstance._cloud_logging_handler_init_params = (
         'mock'
     )
     cloud_logging_client_instance.CloudLoggingClientInstance._cloud_logging_handler = (
-        'mock'
+        'mock'  # pyrefly: ignore[bad-assignment]
     )
 
     cloud_logging_client_instance.CloudLoggingClientInstance._init_fork_module_state()
@@ -887,7 +887,7 @@ class CloudLoggingTest(parameterized.TestCase):
     )
 
   def test_fork_shutdown(self):
-    cloud_logging_client.CloudLoggingClient._singleton_instance = 'mock'
+    cloud_logging_client.CloudLoggingClient._singleton_instance = 'mock'  # pyrefly: ignore[bad-assignment]
 
     cloud_logging_client.CloudLoggingClient._fork_shutdown()
 

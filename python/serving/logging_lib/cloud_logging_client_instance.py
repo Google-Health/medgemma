@@ -158,7 +158,7 @@ def _get_source_location_to_log(stack_frames_back: int) -> Mapping[str, Any]:
       raise ValueError('Cannot get stack frame for specified position.')
     current_frame = current_frame.f_back
   try:
-    frame_info = inspect.getframeinfo(current_frame)
+    frame_info = inspect.getframeinfo(current_frame)  # pyrefly: ignore[bad-argument-type]
     source_location['source_location'] = dict(
         file=frame_info.filename,
         function=frame_info.function,
@@ -379,7 +379,7 @@ class CloudLoggingClientInstance:
             credentials=self._gcp_credentials,
         )
         logging_client.project = (
-            self._gcp_project_name if self._gcp_project_name else None
+            self._gcp_project_name if self._gcp_project_name else None  # pyrefly: ignore[bad-assignment]
         )
         handler = cloud_logging.handlers.CloudLoggingHandler(
             client=logging_client,
@@ -419,7 +419,7 @@ class CloudLoggingClientInstance:
 
   def __setstate__(self, dct: MutableMapping[str, Any]):
     """Un-pickles class and re-creates log lock."""
-    self.__dict__ = dct
+    self.__dict__ = dct  # pyrefly: ignore[bad-assignment]
     self._log_lock = threading.RLock()
     self._thread_local_storage = threading.local()
     # Re-init logging in process.
@@ -693,14 +693,14 @@ class CloudLoggingClientInstance:
     with self._log_lock:
       if severity.value < self._log_error_level:
         return
-      struct = self._merge_signature(_merge_struct(struct))
+      struct = self._merge_signature(_merge_struct(struct))  # pyrefly: ignore[bad-assignment]
       if not self.use_absl_logging() and self._enable_structured_logging:
         # Log using structured logs
         source_location = _get_source_location_to_log(stack_frames_back + 1)
         trace = _add_trace_to_log(
-            self._gcp_project_name, self._trace_key, struct
+            self._gcp_project_name, self._trace_key, struct  # pyrefly: ignore[bad-argument-type]
         )
-        self._clip_struct_log(struct, MAX_LOG_SIZE)
+        self._clip_struct_log(struct, MAX_LOG_SIZE)  # pyrefly: ignore[bad-argument-type]
         _py_log(
             self.python_logger,
             msg,
@@ -712,7 +712,7 @@ class CloudLoggingClientInstance:
       # Log using unstructured logs.
       structure_str = [msg]
       for key in struct:
-        structure_str.append(f'{key}: {struct[key]}')
+        structure_str.append(f'{key}: {struct[key]}')  # pyrefly: ignore[bad-index]
       _absl_log('; '.join(structure_str), severity=severity)
 
   def debug(
