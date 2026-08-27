@@ -65,12 +65,12 @@ WORKDIR /
 # upgrading them breaks shared library linkage (e.g. libcusparseLt.so.0).
 # Remove OS python3-pip/wheel packages — their dpkg metadata triggers
 # vulnerability scanner findings with no upstream Ubuntu fix available.
-# Upgrade Rust OpenSSL crate in vLLM to remediate CVE-2026-41677 / CVE-2026-41898.
+# Remove vLLM code to eradicate uncompiled Rust Cargo lockfiles pinning vulnerable OpenSSL versions.
 RUN dpkg -l | awk '/^ii/ && ($2 ~ /cuda|nccl|cublas|cusparse|cudnn|cutensor|cufft|curand|cusolver|nvjpeg|libnv|tensorrt/) {print $2}' | xargs apt-mark hold && \
     apt-get update && \
     apt-get -y upgrade && \
     apt-get remove -y python3-pip python3-pip-whl python3-wheel && \
-    cargo update -p openssl --manifest-path /opt/vllm/vllm-src/rust/Cargo.toml || true && \
+    rm -rf /opt/vllm/vllm-src/rust/ && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy in minimal gcloud install
