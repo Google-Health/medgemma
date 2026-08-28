@@ -54,9 +54,12 @@ RUN git clone https://github.com/certifi/python-certifi.git /source-mirror/pytho
 
 FROM google/cloud-sdk:stable AS gcloud_builder
 
+# Remove vulnerable gcloud-crc32c binary
+RUN rm -f /usr/lib/google-cloud-sdk/bin/gcloud-crc32c
+
 # ----------------------------------------------------------------------------
 
-FROM nvcr.io/nvidia/tritonserver:26.06-vllm-python-py3
+FROM nvcr.io/nvidia/tritonserver:26.07-vllm-python-py3
 
 WORKDIR /
 
