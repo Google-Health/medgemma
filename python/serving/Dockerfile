@@ -54,8 +54,9 @@ RUN git clone https://github.com/certifi/python-certifi.git /source-mirror/pytho
 
 FROM google/cloud-sdk:stable AS gcloud_builder
 
-# Remove vulnerable gcloud-crc32c binary
-RUN rm -f /usr/lib/google-cloud-sdk/bin/gcloud-crc32c
+# Remove vulnerable gcloud components (crc32c and bundled cryptography)
+RUN rm -f /usr/lib/google-cloud-sdk/bin/gcloud-crc32c && \
+    rm -rf /usr/lib/google-cloud-sdk/platform/bundledpythonunix/lib/python*/site-packages/cryptography*
 
 # ----------------------------------------------------------------------------
 
