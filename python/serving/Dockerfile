@@ -54,9 +54,10 @@ RUN git clone https://github.com/certifi/python-certifi.git /source-mirror/pytho
 
 FROM google/cloud-sdk:stable AS gcloud_builder
 
-# Remove vulnerable gcloud components (crc32c and bundled cryptography)
+# Remove vulnerable gcloud components (crc32c, bundled cryptography and setuptools)
 RUN rm -f /usr/lib/google-cloud-sdk/bin/gcloud-crc32c && \
-    rm -rf /usr/lib/google-cloud-sdk/platform/bundledpythonunix/lib/python*/site-packages/cryptography*
+    rm -rf /usr/lib/google-cloud-sdk/platform/bundledpythonunix/lib/python*/site-packages/cryptography* && \
+    rm -rf /usr/lib/google-cloud-sdk/platform/bundledpythonunix/lib/python*/site-packages/setuptools*
 
 # ----------------------------------------------------------------------------
 
@@ -90,7 +91,7 @@ COPY --from=prep /payload /
 # See model_requirements.txt for the full list of upgraded packages and CVEs.
 COPY ./python/serving/model_requirements.txt /model_requirements.txt
 RUN python3 -m pip install --require-hashes -r /model_requirements.txt && \
-    python3 -m pip uninstall -y pytest virtualenv && \
+    python3 -m pip uninstall -y pytest virtualenv setuptools && \
     rm /model_requirements.txt
 
 # Copy mirrored source code from the prep image
