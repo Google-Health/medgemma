@@ -61,7 +61,7 @@ RUN rm -f /usr/lib/google-cloud-sdk/bin/gcloud-crc32c && \
 
 # ----------------------------------------------------------------------------
 
-FROM nvcr.io/nvidia/tritonserver:26.07-vllm-python-py3
+FROM nvcr.io/nvidia/tritonserver:26.08-vllm-python-py3
 
 WORKDIR /
 
