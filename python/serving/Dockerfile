@@ -74,6 +74,7 @@ WORKDIR /
 RUN dpkg -l | awk '/^ii/ && ($2 ~ /cuda|nccl|cublas|cusparse|cudnn|cutensor|cufft|curand|cusolver|nvjpeg|libnv|tensorrt/) {print $2}' | xargs apt-mark hold && \
     apt-get update && \
     apt-get -y upgrade && \
+    (apt-get remove -y slurm-client slurmd slurmctld "libslurm*" || true) && \
     apt-get remove -y python3-pip python3-pip-whl python3-wheel && \
     rm -rf /opt/vllm/vllm-src/rust/ && \
     rm -rf /var/lib/apt/lists/*
