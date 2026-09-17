@@ -3,6 +3,7 @@
 
 from collections.abc import Sequence
 import json
+from typing import Any
 
 from absl import app
 from absl import flags
@@ -88,7 +89,7 @@ LOCAL_MODEL_FLAG = flags.DEFINE_string(
 def main(argv: Sequence[str]) -> None:
   if len(argv) > 1:
     logging.warning("Unsupported arguments not used: %s", argv[1:])
-  parameters = {
+  parameters: dict[str, Any] = {
       key: flag.value
       for key, flag in flag_map.items()
       if flag.value is not None
